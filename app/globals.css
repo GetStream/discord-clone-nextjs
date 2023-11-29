@@ -6,6 +6,7 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --discord-purple: #7289da;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,4 +25,28 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+}
+
+.serverDialog {
+  top: 50%;
+  left: 50%;
+  transform: translate(-100%, -100%);
+}
+
+::backdrop {
+  background-image: linear-gradient(-45deg, #7289da, rebeccapurple);
+  opacity: 0.5;
+}
+
+label {
+  @apply mb-2 uppercase text-sm font-bold text-gray-500;
+}
+
+input {
+  @apply w-full p-2 border border-gray-400 rounded mb-8;
 }
