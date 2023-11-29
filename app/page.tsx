@@ -16,6 +16,9 @@ import {
 import { useClient } from '../hooks/useClient';
 
 import 'stream-chat-react/dist/css/v2/index.css';
+import CustomChannelList from '@/components/CustomChannelList';
+import CustomChannelPreview from '@/components/CustomChannelPreview';
+import ServerList from '@/components/ServerList';
 
 const userId = '7cd445eb-9af2-4505-80a9-aa8543c3343f';
 const userName = 'Harry Potter';
@@ -39,28 +42,41 @@ const options: ChannelOptions = {
   limit: 10,
 };
 
+export type DiscordServer = {
+  name: string;
+  image: string | undefined;
+};
+
 export default function Home() {
   const chatClient = useClient({
     apiKey,
     user,
     tokenOrProvider: userToken,
   });
-
   if (!chatClient) {
     return <LoadingIndicator />;
   }
 
   return (
     <Chat client={chatClient} theme='str-chat__theme-light'>
-      <ChannelList filters={filters} sort={sort} options={options} />
-      <Channel>
-        <Window>
-          <ChannelHeader />
-          <MessageList />
-          <MessageInput />
-        </Window>
-        <Thread />
-      </Channel>
+      <section className='flex h-screen w-screen layout'>
+        <ServerList />
+        <ChannelList
+          List={CustomChannelList}
+          Preview={CustomChannelPreview}
+          filters={filters}
+          sort={sort}
+          options={options}
+        />
+        <Channel>
+          <Window>
+            <ChannelHeader />
+            <MessageList />
+            <MessageInput />
+          </Window>
+          <Thread />
+        </Channel>
+      </section>
     </Chat>
   );
 }
