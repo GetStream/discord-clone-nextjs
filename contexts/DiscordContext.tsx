@@ -3,6 +3,7 @@
 import { DiscordServer } from '@/app/page';
 import { createContext, useContext, useState } from 'react';
 import { StreamChat } from 'stream-chat';
+import { v4 as uuid } from 'uuid';
 
 type DiscordState = {
   server?: DiscordServer;
@@ -35,7 +36,7 @@ export const DiscordContextProvider: any = ({
     imageUrl: string
   ) {
     if (client.userID) {
-      const channel = client.channel('messaging', 'randomId', {
+      const channel = client.channel('messaging', uuid(), {
         name: 'Welcome',
         members: [client.userID, 'test-user'],
         data: {

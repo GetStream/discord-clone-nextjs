@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/uuid": "^9.0.7",
     "next": "14.0.3",
     "react": "^18",
     "react-dom": "^18",
     "stream-chat": "^8.14.3",
-    "stream-chat-react": "^10.20.1"
+    "stream-chat-react": "^10.20.1",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/node": "^20",
