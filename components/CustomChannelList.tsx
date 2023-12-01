@@ -1,10 +1,8 @@
 'use client';
 
-import { PropsWithChildren, useEffect, useState } from 'react';
-import Image from 'next/image';
+import { PropsWithChildren, useCallback, useEffect, useState } from 'react';
 import { ChannelListMessengerProps, useChatContext } from 'stream-chat-react';
 
-import DiscordIcon from '../public/discord.svg';
 import { DefaultStreamChatGenerics } from 'stream-chat-react/dist/types/types';
 import { Channel } from 'stream-chat';
 import CustomChannelPreview from './CustomChannelPreview';
@@ -14,12 +12,14 @@ const CustomChannelList: React.FC<ChannelListMessengerProps> = (
   props: PropsWithChildren<ChannelListMessengerProps>
 ) => {
   const { children, ...rest } = props;
-  const { client, channels } = useChatContext();
+  const { client } = useChatContext();
   const { server } = useDiscordContext();
   const [channelsByCategories, setChannelsByCategories] = useState<
     Map<string, Array<Channel<DefaultStreamChatGenerics>>>
   >(new Map());
-  useEffect(() => {
+
+  const loadChannelsByCategories = useCallback(async (): Promise<void> => {
+    const channels = await client.queryChannels({});
     const categories = new Set(
       channels
         .filter((channel) => {
@@ -47,22 +47,38 @@ const CustomChannelList: React.FC<ChannelListMessengerProps> = (
     }
 
     setChannelsByCategories(channelsMap);
-  }, [server, channels]);
+  }, [client, server]);
+
+  useEffect(() => {
+    loadChannelsByCategories();
+  }, [loadChannelsByCategories]);
 
   return (
     <div className='w-64 bg-gray-100 h-full flex flex-col items-start'>
-      <button
-        className='flex items-center justify-center w-full p-4 border-b-2 mb-4'
-        onClick={() => console.log('clicked')}
-      >
-        <Image
-          className='block'
-          src={DiscordIcon}
-          width={50}
-          height={50}
-          alt='Discord Icon'
-        />
-      </button>
+      {server?.name && (
+        <div className='flex w-full'>
+          <h2 className='text-lg font-bold text-gray-700 p-4 border-b-2 border-gray-300 w-full hover:bg-gray-300'>
+            {server?.name}
+          </h2>
+          <button>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth={1.5}
+              stroke='currentColor'
+              className='w-6 h-6'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3'
+              />
+            </svg>
+          </button>
+        </div>
+      )}
+
       <div>
         {Array.from(channelsByCategories.keys()).map((category, index) => {
           return (

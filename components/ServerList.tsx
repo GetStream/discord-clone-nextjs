@@ -1,26 +1,39 @@
 import { useChatContext } from 'stream-chat-react';
 import Image from 'next/image';
 import DiscordIcon from '../public/discord.svg';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { DiscordServer } from '@/app/page';
 import { useDiscordContext } from '@/contexts/DiscordContext';
 import CreateServerForm from './CreateServerForm';
 import Link from 'next/link';
+import { Channel } from 'stream-chat';
 
 const ServerList = () => {
-  const { client, channels } = useChatContext();
+  const { client } = useChatContext();
   const { changeServer } = useDiscordContext();
-  const [createServerOpened, setCreateServerOpened] = useState(false);
-  const serverList: Set<DiscordServer> = new Set(
-    channels
-      .map((channel) => {
-        return {
-          name: (channel.data?.data?.server as string) ?? 'Unknown',
-          image: channel.data?.data?.image,
-        };
-      })
-      .filter((server) => server.name !== 'Unknown')
-  );
+  const [serverList, setServerList] = useState<DiscordServer[]>([]);
+
+  const loadServerList = useCallback(async (): Promise<void> => {
+    const channels = await client.queryChannels({});
+    const serverList: Set<DiscordServer> = new Set(
+      channels
+        .map((channel: Channel) => {
+          return {
+            name: (channel.data?.data?.server as string) ?? 'Unknown',
+            image: channel.data?.data?.image,
+          };
+        })
+        .filter((server: DiscordServer) => server.name !== 'Unknown')
+    );
+    setServerList(Array.from(serverList.values()));
+    if (serverList.size > 0) {
+      changeServer(Array.from(serverList.values())[0]);
+    }
+  }, [client, changeServer]);
+
+  useEffect(() => {
+    loadServerList();
+  }, [loadServerList]);
 
   return (
     <div className='bg-gray-200 h-full flex flex-col items-center space-y-4'>
@@ -56,18 +69,12 @@ const ServerList = () => {
       <Link
         href={'/?createServer=true'}
         className='flex items-center justify-center rounded-full bg-white text-green-500 hover:bg-green-500 hover:text-white hover:rounded-xl transition-all duration-200 p-2 my-2 text-2xl font-light h-12 w-12'
-        onClick={() => addServerClicked()}
       >
         <span className='inline-block'>+</span>
       </Link>
       <CreateServerForm />
     </div>
   );
-
-  async function addServerClicked() {
-    setCreateServerOpened(true);
-    console.log('Add Server Clicked');
-  }
 };
 
 export default ServerList;
