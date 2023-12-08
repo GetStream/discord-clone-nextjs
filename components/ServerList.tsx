@@ -40,7 +40,7 @@ const ServerList = () => {
     <div className='bg-gray-200 h-full flex flex-col items-center space-y-4'>
       <button
         className='flex items-center justify-center w-full p-4 border-b-2 border-gray-300 mb-4 relative'
-        onClick={() => console.log('clicked')}
+        onClick={() => changeServer(undefined, client)}
       >
         <Image src={DiscordIcon} width={50} height={50} alt='Discord Icon' />
       </button>

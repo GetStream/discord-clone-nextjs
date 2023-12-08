@@ -1,8 +1,12 @@
-import { ChannelPreviewUIComponentProps } from 'stream-chat-react';
+import {
+  ChannelPreviewUIComponentProps,
+  useChatContext,
+} from 'stream-chat-react';
 
 const CustomChannelPreview = (props: ChannelPreviewUIComponentProps) => {
   console.log('[CustomChannelPreview]');
-  const { channel, setActiveChannel, watchers } = props;
+  const { channel } = props;
+  const { setActiveChannel } = useChatContext();
   return (
     <button
       className='flex items-center px-2 hover:bg-gray-200 rounded-md'
@@ -14,8 +18,9 @@ const CustomChannelPreview = (props: ChannelPreviewUIComponentProps) => {
   );
 
   function onChannelClick() {
+    console.log('[CustomChannelPreview] onChannelClick', setActiveChannel);
     if (setActiveChannel === undefined) return;
-    setActiveChannel(channel, watchers);
+    setActiveChannel(channel);
   }
 };
 

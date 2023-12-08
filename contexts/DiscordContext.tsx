@@ -2,14 +2,14 @@
 
 import { DiscordServer } from '@/app/page';
 import { createContext, useCallback, useContext, useState } from 'react';
-import { Channel, StreamChat } from 'stream-chat';
+import { Channel, ChannelFilters, StreamChat } from 'stream-chat';
 import { DefaultStreamChatGenerics } from 'stream-chat-react/dist/types/types';
 import { v4 as uuid } from 'uuid';
 
 type DiscordState = {
   server?: DiscordServer;
   channelsByCategories: Map<string, Array<Channel<DefaultStreamChatGenerics>>>;
-  changeServer: (server: DiscordServer, client: StreamChat) => void;
+  changeServer: (server: DiscordServer | undefined, client: StreamChat) => void;
   createServer: (client: StreamChat, name: string, imageUrl: string) => void;
   createChannel: (
     client: StreamChat,
@@ -37,33 +37,45 @@ export const DiscordContextProvider: any = ({
   const [myState, setMyState] = useState<DiscordState>(initialValue);
 
   const changeServer = useCallback(
-    async (server: DiscordServer, client: StreamChat) => {
+    async (server: DiscordServer | undefined, client: StreamChat) => {
       console.log('[changeServer] server: ', server);
-      const channels = await client.queryChannels({});
-      const categories = new Set(
-        channels
-          .filter((channel) => {
-            return channel.data?.data?.server === server.name;
-          })
-          .map((channel) => {
-            return channel.data?.data?.category;
-          })
-      );
+      let filters: ChannelFilters = {};
+      if (!server) {
+        filters = {
+          type: 'messaging',
+          member_count: 2,
+        };
+      }
 
+      const channels = await client.queryChannels(filters);
       const channelsByCategories = new Map<
         string,
         Array<Channel<DefaultStreamChatGenerics>>
       >();
-      for (const category of Array.from(categories)) {
-        channelsByCategories.set(
-          category,
-          channels.filter((channel) => {
-            return (
-              channel.data?.data?.server === server.name &&
-              channel.data?.data?.category === category
-            );
-          })
+      if (server) {
+        const categories = new Set(
+          channels
+            .filter((channel) => {
+              return channel.data?.data?.server === server.name;
+            })
+            .map((channel) => {
+              return channel.data?.data?.category;
+            })
         );
+
+        for (const category of Array.from(categories)) {
+          channelsByCategories.set(
+            category,
+            channels.filter((channel) => {
+              return (
+                channel.data?.data?.server === server.name &&
+                channel.data?.data?.category === category
+              );
+            })
+          );
+        }
+      } else {
+        channelsByCategories.set('Direct Messages', channels);
       }
       setMyState((myState) => {
         return { ...myState, server, channelsByCategories };
