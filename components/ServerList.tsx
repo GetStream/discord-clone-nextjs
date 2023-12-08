@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { Channel } from 'stream-chat';
 
 const ServerList = () => {
+  console.log('[ServerList]');
   const { client } = useChatContext();
   const { changeServer } = useDiscordContext();
   const [serverList, setServerList] = useState<DiscordServer[]>([]);
@@ -27,7 +28,7 @@ const ServerList = () => {
     );
     setServerList(Array.from(serverList.values()));
     if (serverList.size > 0) {
-      changeServer(Array.from(serverList.values())[0]);
+      changeServer(Array.from(serverList.values())[0], client);
     }
   }, [client, changeServer]);
 
@@ -49,7 +50,7 @@ const ServerList = () => {
             key={server.name}
             className='flex items-center justify-center mx-2 px-2'
             onClick={() => {
-              changeServer(server);
+              changeServer(server, client);
             }}
           >
             {server.image ? (

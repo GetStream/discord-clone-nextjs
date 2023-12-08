@@ -43,10 +43,11 @@ body {
   opacity: 0.5;
 }
 
-label {
+.labelTitle {
   @apply mb-2 uppercase text-sm font-bold text-gray-500;
 }
 
-input {
+input,
+select {
   @apply w-full p-2 border border-gray-400 rounded mb-8;
 }

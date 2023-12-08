@@ -33,21 +33,13 @@ const apiKey = '7cu55d72xtjs';
 const userToken =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiN2NkNDQ1ZWItOWFmMi00NTA1LTgwYTktYWE4NTQzYzMzNDNmIn0.TtrCA5VoRB2KofI3O6lYjYZd2pHdQT408u7ryeWO4Qg';
 
-const sort: ChannelSort = { last_message_at: -1 };
-const filters: ChannelFilters = {
-  type: 'messaging',
-  members: { $in: [userId] },
-};
-const options: ChannelOptions = {
-  limit: 10,
-};
-
 export type DiscordServer = {
   name: string;
   image: string | undefined;
 };
 
 export default function Home() {
+  console.log('[Create]');
   const chatClient = useClient({
     apiKey,
     user,
@@ -61,13 +53,7 @@ export default function Home() {
     <Chat client={chatClient} theme='str-chat__theme-light'>
       <section className='flex h-screen w-screen layout'>
         <ServerList />
-        <ChannelList
-          List={CustomChannelList}
-          Preview={CustomChannelPreview}
-          filters={filters}
-          sort={sort}
-          options={options}
-        />
+        <ChannelList List={CustomChannelList} Preview={CustomChannelPreview} />
         <Channel>
           <Window>
             <ChannelHeader />

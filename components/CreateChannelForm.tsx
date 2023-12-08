@@ -1,33 +1,34 @@
 import { useDiscordContext } from '@/contexts/DiscordContext';
 import { UserObject } from '@/model/UserObject';
-import Link from 'next/link';
-import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useChatContext } from 'stream-chat-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 type FormState = {
-  serverName: string;
-  serverImage: string;
+  channelName: string;
+  category: string;
   users: UserObject[];
 };
 
-const CreateServerForm = () => {
-  console.log('[CreateServerForm]');
-
-  // Check if we are shown
+const CreateChannelForm = () => {
+  console.log('[CreateChannelForm]');
   const params = useSearchParams();
-  const showCreateServerForm = params.get('createServer');
+  const showCreateChannelForm = params.get('createChannel');
+  const category = params.get('category');
   const dialogRef = useRef<HTMLDialogElement>(null);
   const router = useRouter();
 
-  // Data
+  const [newCategoryActive, setNewCategoryActive] = useState<boolean>(false);
+  const [newCategory, setNewCategory] = useState<string>('');
+
   const { client } = useChatContext();
-  const { createServer } = useDiscordContext();
+  const { createChannel, channelsByCategories } = useDiscordContext();
   const initialState: FormState = {
-    serverName: '',
-    serverImage: '',
+    channelName: '',
+    category: category ?? '',
     users: [],
   };
 
@@ -41,12 +42,12 @@ const CreateServerForm = () => {
   }, []);
 
   useEffect(() => {
-    if (showCreateServerForm && dialogRef.current) {
+    if (showCreateChannelForm && dialogRef.current) {
       dialogRef.current.showModal();
     } else {
       dialogRef.current?.close();
     }
-  }, [showCreateServerForm]);
+  }, [showCreateChannelForm]);
 
   useEffect(() => {
     loadUsers();
@@ -75,32 +76,62 @@ const CreateServerForm = () => {
       </Link>
       <h2 className='text-3xl font-bold text-gray-600'>Create new server</h2>
       <form method='dialog' action={createClicked} className='flex flex-col'>
-        <label className='labelTitle' htmlFor='serverName'>
-          Server Name
+        <label className='labelTitle' htmlFor='channelName'>
+          Channel Name
         </label>
         <input
           type='text'
-          id='serverName'
-          name='serverName'
-          value={formData.serverName}
+          id='channelName'
+          name='channelName'
+          value={formData.channelName}
           onChange={(e) =>
-            setFormData({ ...formData, serverName: e.target.value })
+            setFormData({ ...formData, channelName: e.target.value })
           }
           required
         />
-        <label className='labelTitle' htmlFor='serverImage'>
-          Image URL
+        <label
+          className='labelTitle flex items-center justify-between'
+          htmlFor='category'
+        >
+          Category
+          {!newCategoryActive && (
+            <button
+              className='text-discord font-bold uppercase'
+              onClick={() => setNewCategoryActive(true)}
+            >
+              New
+            </button>
+          )}
+          {newCategoryActive && (
+            <button
+              className='py-1 px-2 bg-discord text-white rounded-md font-bold uppercase'
+              onClick={() => newCategoryAdded}
+            >
+              Add
+            </button>
+          )}
         </label>
-        <input
-          type='text'
-          id='serverImage'
-          name='serverImage'
-          value={formData.serverImage}
-          onChange={(e) =>
-            setFormData({ ...formData, serverImage: e.target.value })
-          }
-          required
-        />
+        {newCategoryActive && (
+          <input
+            type='text'
+            id='new-category'
+            name='new-category'
+            value={newCategory}
+            onChange={(e) => setNewCategory(e.target.value)}
+          />
+        )}
+        <select name='category' id='category' required>
+          <option value={category ?? ''}>
+            {category ?? 'Select a category'}
+          </option>
+          {Array.from(channelsByCategories.keys())
+            .filter((value) => value !== category)
+            .map((thisCategory: string) => (
+              <option key={thisCategory} value={thisCategory}>
+                {thisCategory}
+              </option>
+            ))}
+        </select>
         <h2 className='mb-2 labelTitle'>Add Users</h2>
         {users.map((user) => (
           <div
@@ -166,9 +197,21 @@ const CreateServerForm = () => {
   );
 
   function createClicked() {
-    createServer(client, formData.serverName, formData.serverImage);
+    createChannel(
+      client,
+      formData.channelName,
+      category || 'Category',
+      formData.users.map((user) => user.id)
+    );
     setFormData(initialState);
     router.replace('/');
   }
+
+  function newCategoryAdded() {
+    setFormData({ ...formData, category: newCategory });
+    setNewCategory('');
+    setNewCategoryActive(false);
+  }
 };
-export default CreateServerForm;
+
+export default CreateChannelForm;

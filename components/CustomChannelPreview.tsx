@@ -1,6 +1,7 @@
 import { ChannelPreviewUIComponentProps } from 'stream-chat-react';
 
 const CustomChannelPreview = (props: ChannelPreviewUIComponentProps) => {
+  console.log('[CustomChannelPreview]');
   const { channel, setActiveChannel, watchers } = props;
   return (
     <button
