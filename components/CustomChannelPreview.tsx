@@ -10,18 +10,12 @@ const CustomChannelPreview = (props: ChannelPreviewUIComponentProps) => {
   return (
     <button
       className='flex items-center px-2 hover:bg-gray-200 rounded-md'
-      onClick={() => onChannelClick()}
+      onClick={() => setActiveChannel(channel)}
     >
       <span className='italic text-xl mr-2 text-gray-500'>#</span>
       <span className='text-sm'>{channel.data?.name || 'Channel Preview'}</span>
     </button>
   );
-
-  function onChannelClick() {
-    console.log('[CustomChannelPreview] onChannelClick', setActiveChannel);
-    if (setActiveChannel === undefined) return;
-    setActiveChannel(channel);
-  }
 };
 
 export default CustomChannelPreview;

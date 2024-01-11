@@ -53,7 +53,7 @@ export default function Home() {
     <Chat client={chatClient} theme='str-chat__theme-light'>
       <section className='flex h-screen w-screen layout'>
         <ServerList />
-        <ChannelList List={CustomChannelList} Preview={CustomChannelPreview} />
+        <ChannelList List={CustomChannelList} sendChannelsToList={true} />
         <Channel>
           <Window>
             <ChannelHeader />

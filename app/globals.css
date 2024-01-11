@@ -35,7 +35,7 @@ body {
 .serverDialog {
   top: 50%;
   left: 50%;
-  transform: translate(-100%, -100%);
+  transform: translate(-100%, -50%);
 }
 
 ::backdrop {
@@ -50,4 +50,100 @@ body {
 input,
 select {
   @apply w-full p-2 border border-gray-400 rounded mb-8;
+}
+
+.rounded-icon {
+  @apply transition-all ease-in-out duration-200;
+  border-radius: 50%;
+}
+
+.rounded-icon:hover {
+  border-radius: 1rem;
+}
+
+.sidebar-icon {
+  @apply flex items-center justify-center w-full relative transition-all ease-in-out duration-200;
+}
+
+.sidebar-icon::before {
+  @apply transition-all duration-200 ease-in-out;
+  --content-height: 0rem;
+  --content-width: 0rem;
+  --offset: -0.4rem;
+  content: '';
+  display: block;
+  height: var(--content-height);
+  width: var(--content-width);
+  background: black;
+  position: absolute;
+  border-radius: 3px;
+  left: var(--offset);
+}
+
+.sidebar-icon:hover::before {
+  --content-height: 1.25rem;
+  --content-width: 0.5rem;
+  --offset: -0.15rem;
+}
+
+.selected-icon::before {
+  --content-height: 2rem;
+  --content-width: 0.5rem;
+  --offset: -0.15rem;
+}
+
+.server-icon {
+  @apply flex items-center justify-center w-full relative transition-all duration-200;
+  border-radius: 50%;
+  background-origin: content-box;
+}
+
+.server-icon:hover {
+  border-radius: 1rem;
+}
+
+.server-icon::before {
+  @apply transition-all duration-200;
+  --content-height: 0rem;
+  --content-width: 0rem;
+  --offset: -1.15rem;
+  content: '';
+  display: block;
+  height: var(--content-height);
+  width: var(--content-width);
+  background: black;
+  position: absolute;
+  border-radius: 3px;
+  left: var(--offset);
+}
+
+.server-icon:hover::before {
+  --content-height: 1.25rem;
+  --content-width: 0.5rem;
+  --offset: -1.1rem;
+}
+
+.discord-icon {
+  @apply bg-white p-3 w-full h-full;
+  content: '';
+
+  background: url('../assets/discord-black.svg') no-repeat center center, white;
+  background-origin: content-box;
+}
+
+.discord-icon:hover {
+  background: url('../assets/discord-white.svg') no-repeat center center,
+    var(--discord-purple);
+  background-origin: content-box;
+  --offset: 1.5rem;
+}
+
+.online-icon::after {
+  @apply block absolute h-4 w-4 bg-green-500 bottom-0 right-0 rounded-full border-2 border-gray-200;
+  content: '';
+}
+
+.inactive-icon::after {
+  @apply block absolute h-full w-0.5 bg-red-400 rotate-45 rounded-xl;
+  content: '';
 }

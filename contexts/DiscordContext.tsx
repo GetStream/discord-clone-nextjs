@@ -10,7 +10,12 @@ type DiscordState = {
   server?: DiscordServer;
   channelsByCategories: Map<string, Array<Channel<DefaultStreamChatGenerics>>>;
   changeServer: (server: DiscordServer | undefined, client: StreamChat) => void;
-  createServer: (client: StreamChat, name: string, imageUrl: string) => void;
+  createServer: (
+    client: StreamChat,
+    name: string,
+    imageUrl: string,
+    userIds: string[]
+  ) => void;
   createChannel: (
     client: StreamChat,
     name: string,
@@ -85,24 +90,27 @@ export const DiscordContextProvider: any = ({
   );
 
   const createServer = useCallback(
-    async (client: StreamChat, name: string, imageUrl: string) => {
-      if (client.userID) {
-        const channel = client.channel('messaging', uuid(), {
-          name: 'Welcome',
-          members: [client.userID, 'test-user'],
-          data: {
-            image: imageUrl,
-            server: name,
-            category: 'Text Channels',
-          },
-        });
-        try {
-          const response = await channel.create();
-          console.log('[createServer] Response: ', response);
-          changeServer({ name, image: imageUrl }, client);
-        } catch (err) {
-          console.log(err);
-        }
+    async (
+      client: StreamChat,
+      name: string,
+      imageUrl: string,
+      userIds: string[]
+    ) => {
+      const channel = client.channel('messaging', uuid(), {
+        name: 'Welcome',
+        members: userIds,
+        data: {
+          image: imageUrl,
+          server: name,
+          category: 'Text Channels',
+        },
+      });
+      try {
+        const response = await channel.create();
+        console.log('[createServer] Response: ', response);
+        changeServer({ name, image: imageUrl }, client);
+      } catch (err) {
+        console.log(err);
       }
     },
     [changeServer]

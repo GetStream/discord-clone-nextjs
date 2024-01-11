@@ -1,11 +1,11 @@
 import { useDiscordContext } from '@/contexts/DiscordContext';
 import { UserObject } from '@/model/UserObject';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useChatContext } from 'stream-chat-react';
+import UserCard from './UserCard';
 
 type FormState = {
   serverName: string;
@@ -35,10 +35,20 @@ const CreateServerForm = () => {
   const [users, setUsers] = useState<UserObject[]>([]);
 
   const loadUsers = useCallback(async () => {
-    const response = await fetch('/api/users');
-    const data = (await response.json())?.data as UserObject[];
-    if (data) setUsers(data);
-  }, []);
+    const response = await client.queryUsers({});
+    const users: UserObject[] = response.users
+      .filter((user) => user.role !== 'admin')
+      .map((user) => {
+        return {
+          id: user.id,
+          name: user.name ?? user.id,
+          image: user.image as string,
+          online: user.online,
+          lastOnline: user.last_active,
+        };
+      });
+    if (users) setUsers(users);
+  }, [client]);
 
   useEffect(() => {
     if (showCreateServerForm && dialogRef.current) {
@@ -112,46 +122,9 @@ const CreateServerForm = () => {
               id={user.id}
               name={user.id}
               className='w-4 h-4 mb-0'
-              onChange={() => {}}
-            ></input>
-            <label
-              className='w-full flex items-center space-x-6'
-              htmlFor='users'
-            >
-              {user.image && (
-                <Image
-                  src={user.image}
-                  width={40}
-                  height={40}
-                  alt={user.name}
-                  className='w-8 h-8 rounded-full'
-                />
-              )}
-              {!user.image && (
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  strokeWidth={1.5}
-                  stroke='currentColor'
-                  className='w-8 h-8'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    d='M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z'
-                  />
-                </svg>
-              )}
-              <p>
-                <span className='block text-gray-600'>{user.name}</span>
-                {user.lastOnline && (
-                  <span className='text-sm text-gray-400'>
-                    Last online: {user.lastOnline.split('T')[0]}
-                  </span>
-                )}
-              </p>
-            </label>
+              onChange={(event) => userBoxChecked(event.target.checked, user)}
+            />
+            <UserCard user={user} />
           </div>
         ))}
 
@@ -165,8 +138,27 @@ const CreateServerForm = () => {
     </dialog>
   );
 
+  function userBoxChecked(checked: Boolean, user: UserObject) {
+    if (checked) {
+      setFormData({
+        ...formData,
+        users: [...formData.users, user],
+      });
+    } else {
+      setFormData({
+        ...formData,
+        users: formData.users.filter((u) => u.id !== user.id),
+      });
+    }
+  }
+
   function createClicked() {
-    createServer(client, formData.serverName, formData.serverImage);
+    createServer(
+      client,
+      formData.serverName,
+      formData.serverImage,
+      formData.users.map((user) => user.id)
+    );
     setFormData(initialState);
     router.replace('/');
   }
