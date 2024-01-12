@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Discord Clone using NextJS, TailwindCSS, and Stream
 
-## Getting Started
+This repository accompanies the series of blog posts, published on the Stream Blog, about creating a Discord clone using [NextJS](https://nextjs.org), [TailwindCSS](https://tailwindcss.com), and the Stream [Chat](https://getstream.io/chat/docs/) and [Video](https://getstream.io/video/docs/) SDKs.
 
-First, run the development server:
+The series will have 5 posts at the end (we'll have the links updated once they are published):
+
+- [Part 1: Setup Project](https://getstream.io/blog/discord-clone-project-setup/)
+- Part 2: General Layout and Server List
+- Part 3: Channel List UI
+- Part 4: Message List UI
+- Part 5: Adding video and audio calling
+
+---
+
+## Running the project
+
+### Prerequisites
+
+None. Well, a machine running [Node.js](https://nodejs.org/en) and the option to clone the repository. The rest of the setup is explained in [Part 1](https://getstream.io/blog/discord-clone-project-setup/).
+
+### Running locally
+
+The first thing to do is install dependencies:
+
+```bash
+npm install
+# or
+yarn
+```
+
+Then we can run the project on our machine in development mode:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Use the Stream SDKs yourself
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can get started with the Stream SDKs today, [for free](https://http://getstream.io/try-for-free/).
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Find our React documentation here:
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [Chat SDK](https://getstream.io/chat/sdk/react/)
+- [Video and Audio SDK](https://getstream.io/video/docs/react/)
