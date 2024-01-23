@@ -7,8 +7,8 @@ This repository accompanies the series of blog posts published on the Stream Blo
 The series will have five posts at the end (we'll have the links updated once they are published):
 
 - [Part 1: Setup Project](https://getstream.io/blog/discord-clone-project-setup/)
-- Part 2: General Layout and Server List (coming soon)
-- Part 3: Channel List UI
+- [Part 2: General Layout and Server List](https://getstream.io/blog/discord-clone-server-list/)
+- Part 3: Channel List UI (coming soon)
 - Part 4: Message List UI
 - Part 5: Adding video and audio calling
 
