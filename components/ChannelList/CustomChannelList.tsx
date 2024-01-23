@@ -7,11 +7,11 @@ import CustomChannelPreview from './CustomChannelPreview';
 import { useDiscordContext } from '@/contexts/DiscordContext';
 import Link from 'next/link';
 import CreateChannelForm from './CreateChannelForm';
-import UserBar from './UserBar';
+import UserBar from './UserBar/UserBar';
 import { Channel } from 'stream-chat';
 import { DefaultStreamChatGenerics } from 'stream-chat-react/dist/types/types';
 import { DiscordServer } from '@/app/page';
-import ChannelListTopBar from './ChannelListTopBar';
+import ChannelListTopBar from './TopBar/ChannelListTopBar';
 
 const CustomChannelList: React.FC<ChannelListMessengerProps> = (
   props: PropsWithChildren<ChannelListMessengerProps>
