@@ -11,6 +11,7 @@ import UserBar from './UserBar';
 import { Channel } from 'stream-chat';
 import { DefaultStreamChatGenerics } from 'stream-chat-react/dist/types/types';
 import { DiscordServer } from '@/app/page';
+import ChannelListTopBar from './ChannelListTopBar';
 
 const CustomChannelList: React.FC<ChannelListMessengerProps> = (
   props: PropsWithChildren<ChannelListMessengerProps>
@@ -24,27 +25,7 @@ const CustomChannelList: React.FC<ChannelListMessengerProps> = (
 
   return (
     <div className='w-64 bg-gray-100 h-full flex flex-col items-start'>
-      <div className='flex w-full border-b-2 border-gray-300 hover:bg-gray-300'>
-        <h2 className='text-lg font-bold text-gray-700 p-4 w-full'>
-          {server?.name || 'Direct Messages'}
-        </h2>
-        <button className='mr-4'>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            fill='none'
-            viewBox='0 0 24 24'
-            strokeWidth={1.5}
-            stroke='currentColor'
-            className='w-6 h-6 text-gray-500'
-          >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              d='M19.5 8.25l-7.5 7.5-7.5-7.5'
-            />
-          </svg>
-        </button>
-      </div>
+      <ChannelListTopBar serverName={server?.name || 'Direct Messages'} />
 
       <div className='w-full'>
         {Array.from(channelsByCategories.keys()).map((category, index) => {

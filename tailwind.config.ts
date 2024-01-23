@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       colors: {
         discord: '#7289da',
+        'dark-discord': '#4752c4',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

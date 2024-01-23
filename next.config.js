@@ -14,6 +14,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'thispersondoesnotexist.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.discordapp.com',
+      },
     ],
   },
 };
