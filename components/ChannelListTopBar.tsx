@@ -71,7 +71,13 @@ export default function ChannelListTopBar({
         <div className='absolute w-full p-2'>
           <div className='w-full bg-white p-2 shadow-lg rounded-md'>
             {menuOptions.map((option) => (
-              <ListRow key={option.name} {...option} />
+              <button
+                key={option.name}
+                className='w-full'
+                onClick={() => setMenuOpen(false)}
+              >
+                <ListRow {...option} />
+              </button>
             ))}
           </div>
         </div>
