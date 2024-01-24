@@ -148,3 +148,12 @@ select {
   @apply block absolute h-full w-0.5 bg-red-400 rotate-45 rounded-xl;
   content: '';
 }
+
+.channel-container {
+  @apply relative;
+}
+
+.channel-container::before {
+  @apply block absolute h-2 w-3 -left-4 bg-gray-700 rounded-xl;
+  content: '';
+}
