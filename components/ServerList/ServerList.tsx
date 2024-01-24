@@ -8,7 +8,6 @@ import Link from 'next/link';
 import { Channel } from 'stream-chat';
 
 const ServerList = () => {
-  console.log('[ServerList]');
   const { client } = useChatContext();
   const { server: activeServer, changeServer } = useDiscordContext();
   const [serverList, setServerList] = useState<DiscordServer[]>([]);
@@ -37,7 +36,7 @@ const ServerList = () => {
   }, [loadServerList]);
 
   return (
-    <div className='bg-gray-200 h-full flex flex-col items-center'>
+    <div className='bg-dark-bg-gray h-full flex flex-col items-center'>
       <button
         className={`block p-3 aspect-square sidebar-icon ${
           activeServer === undefined ? 'selected-icon' : ''

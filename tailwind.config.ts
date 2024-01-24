@@ -11,6 +11,10 @@ const config: Config = {
       colors: {
         discord: '#7289da',
         'dark-discord': '#4752c4',
+        'dark-bg-gray': '#dfe1e4',
+        'medium-bg-gray': '#f0f1f3',
+        'light-bg-gray': '#e8eaec',
+        'hover-bg-gray': '#cdcfd3',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

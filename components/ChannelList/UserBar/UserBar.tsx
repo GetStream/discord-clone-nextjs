@@ -6,7 +6,7 @@ export default function UserBar(): JSX.Element {
   const [audioActive, setAudioActive] = useState(false);
 
   return (
-    <div className='mt-auto p-2 bg-gray-200 w-full flex items-center justify-between'>
+    <div className='mt-auto p-2 bg-light-bg-gray w-full flex items-center justify-between'>
       <div className='relative online-icon'>
         <Image
           src={'https://thispersondoesnotexist.com/'}
