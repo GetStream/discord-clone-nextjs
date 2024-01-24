@@ -9,7 +9,7 @@ const CustomChannelPreview = (props: ChannelPreviewUIComponentProps) => {
   const { setActiveChannel } = useChatContext();
   return (
     <button
-      className='flex items-center px-2 hover:bg-gray-200 rounded-md'
+      className='w-full flex items-center px-2 hover:bg-gray-200 rounded-md'
       onClick={() => setActiveChannel(channel)}
     >
       <span className='italic text-xl mr-2 text-gray-500'>#</span>

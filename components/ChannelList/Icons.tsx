@@ -3,7 +3,26 @@ type IconProps = {
   color?: string;
 };
 
-export function CloseIcon({ size = 6, color }: IconProps): JSX.Element {
+export function PlusIcon({ size = 5, color }: IconProps): JSX.Element {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      fill='none'
+      viewBox='0 0 24 24'
+      strokeWidth={2}
+      stroke='currentColor'
+      className={`h-${size} w-${size} ${color ? color : ''}`}
+    >
+      <path
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        d='M12 4.5v15m7.5-7.5h-15'
+      />
+    </svg>
+  );
+}
+
+export function CloseIcon({ size = 5, color }: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -22,7 +41,7 @@ export function CloseIcon({ size = 6, color }: IconProps): JSX.Element {
   );
 }
 
-export function ChevronDown({ size = 6, color }: IconProps): JSX.Element {
+export function ChevronDown({ size = 5, color }: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -36,6 +55,25 @@ export function ChevronDown({ size = 6, color }: IconProps): JSX.Element {
         strokeLinecap='round'
         strokeLinejoin='round'
         d='M19.5 8.25l-7.5 7.5-7.5-7.5'
+      />
+    </svg>
+  );
+}
+
+export function ChevronRight({ size = 5, color }: IconProps): JSX.Element {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      fill='none'
+      viewBox='0 0 24 24'
+      strokeWidth={2}
+      stroke='currentColor'
+      className={`h-${size} w-${size} ${color ? color : ''}`}
+    >
+      <path
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        d='m8.25 4.5 7.5 7.5-7.5 7.5'
       />
     </svg>
   );

@@ -1,0 +1,11 @@
+.create-button {
+  position: relative;
+}
+
+.create-button:hover::before {
+  @apply absolute p-2 bg-white shadow-md rounded-md text-sm font-medium text-gray-500 z-10 overflow-visible;
+  content: 'Create Channel';
+  top: -44px;
+  left: -100px;
+  width: 120px;
+}
