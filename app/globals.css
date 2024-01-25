@@ -54,7 +54,7 @@ select {
 }
 
 .rounded-icon {
-  @apply transition-all ease-in-out duration-200;
+  @apply transition-all ease-in-out duration-200 aspect-square object-cover;
   border-radius: 50%;
 }
 
