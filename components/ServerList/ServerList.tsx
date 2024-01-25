@@ -36,7 +36,7 @@ const ServerList = () => {
   }, [loadServerList]);
 
   return (
-    <div className='bg-dark-bg-gray h-full flex flex-col items-center'>
+    <div className='bg-dark-gray h-full flex flex-col items-center'>
       <button
         className={`block p-3 aspect-square sidebar-icon ${
           activeServer === undefined ? 'selected-icon' : ''

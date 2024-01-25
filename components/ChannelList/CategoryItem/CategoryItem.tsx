@@ -9,8 +9,8 @@ import './CategoryItem.css';
 
 type CategoryItemProps = {
   category: string;
-  serverName: string;
   channels: Channel<DefaultStreamChatGenerics>[];
+  serverName: string;
 };
 
 export default function CategoryItem({

@@ -3,16 +3,14 @@
 import { PropsWithChildren } from 'react';
 import { ChannelListMessengerProps } from 'stream-chat-react';
 
-import CustomChannelPreview from './CustomChannelPreview';
 import { useDiscordContext } from '@/contexts/DiscordContext';
-import Link from 'next/link';
 import CreateChannelForm from './CreateChannelForm';
 import UserBar from './UserBar/UserBar';
 import { Channel } from 'stream-chat';
 import { DefaultStreamChatGenerics } from 'stream-chat-react/dist/types/types';
 import { DiscordServer } from '@/app/page';
 import ChannelListTopBar from './TopBar/ChannelListTopBar';
-import CategoryItem from './Category/CategoryItem';
+import CategoryItem from './CategoryItem/CategoryItem';
 
 const CustomChannelList: React.FC<ChannelListMessengerProps> = (
   props: PropsWithChildren<ChannelListMessengerProps>
@@ -25,7 +23,7 @@ const CustomChannelList: React.FC<ChannelListMessengerProps> = (
   );
 
   return (
-    <div className='w-64 bg-medium-bg-gray h-full flex flex-col items-start'>
+    <div className='w-64 bg-medium-gray h-full flex flex-col items-start'>
       <ChannelListTopBar serverName={server?.name || 'Direct Messages'} />
 
       <div className='w-full'>
