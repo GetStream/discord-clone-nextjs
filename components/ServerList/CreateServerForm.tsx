@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useChatContext } from 'stream-chat-react';
-import UserCard from '../ChannelList/UserBar/UserCard';
+import UserCard from './UserCard';
 
 type FormState = {
   serverName: string;

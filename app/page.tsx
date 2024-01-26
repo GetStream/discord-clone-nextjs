@@ -17,7 +17,6 @@ import { useClient } from '../hooks/useClient';
 
 import 'stream-chat-react/dist/css/v2/index.css';
 import CustomChannelList from '@/components/ChannelList/CustomChannelList';
-import CustomChannelPreview from '@/components/ChannelList/CustomChannelPreview';
 import ServerList from '@/components/ServerList/ServerList';
 
 const userId = '7cd445eb-9af2-4505-80a9-aa8543c3343f';

@@ -124,7 +124,7 @@ export const DiscordContextProvider: any = ({
       userIds: string[]
     ) => {
       if (client.userID) {
-        const channel = client.channel('messaging', {
+        const channel = client.channel('team', {
           name: name,
           members: userIds,
           data: {

@@ -4,8 +4,8 @@ import { PropsWithChildren } from 'react';
 import { ChannelListMessengerProps } from 'stream-chat-react';
 
 import { useDiscordContext } from '@/contexts/DiscordContext';
-import CreateChannelForm from './CreateChannelForm';
-import UserBar from './UserBar/UserBar';
+import CreateChannelForm from './CreateChannelForm/CreateChannelForm';
+import UserBar from './BottomBar/ChannelListBottomBar';
 import { Channel } from 'stream-chat';
 import { DefaultStreamChatGenerics } from 'stream-chat-react/dist/types/types';
 import { DiscordServer } from '@/app/page';

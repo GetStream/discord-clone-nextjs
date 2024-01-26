@@ -12,7 +12,13 @@ import {
   SpeakerMuted,
 } from '../Icons';
 
-import { ListRowElement } from './ChannelListMenuRow';
+export type ListRowElement = {
+  name: string;
+  icon: JSX.Element;
+  bottomBorder?: boolean;
+  purple?: boolean;
+  red?: boolean;
+};
 
 export const menuItems: ListRowElement[] = [
   { name: 'Server Boost', icon: <Boost />, bottomBorder: true },

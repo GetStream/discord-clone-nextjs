@@ -1,9 +1,10 @@
 type IconProps = {
-  size?: number;
-  color?: string;
+  className?: string;
 };
 
-export function PlusIcon({ size = 5, color }: IconProps): JSX.Element {
+export function PlusIcon({
+  className = 'h-5 w-5 text-gray-500',
+}: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -11,7 +12,7 @@ export function PlusIcon({ size = 5, color }: IconProps): JSX.Element {
       viewBox='0 0 24 24'
       strokeWidth={2}
       stroke='currentColor'
-      className={`h-${size} w-${size} ${color ? color : ''}`}
+      className={className}
     >
       <path
         strokeLinecap='round'
@@ -22,7 +23,9 @@ export function PlusIcon({ size = 5, color }: IconProps): JSX.Element {
   );
 }
 
-export function CloseIcon({ size = 5, color }: IconProps): JSX.Element {
+export function CloseIcon({
+  className = 'h-5 w-5 text-gray-500',
+}: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -30,7 +33,7 @@ export function CloseIcon({ size = 5, color }: IconProps): JSX.Element {
       viewBox='0 0 24 24'
       strokeWidth={1.5}
       stroke='currentColor'
-      className={`h-${size} w-${size} ${color ? color : ''}`}
+      className={className}
     >
       <path
         strokeLinecap='round'
@@ -41,7 +44,9 @@ export function CloseIcon({ size = 5, color }: IconProps): JSX.Element {
   );
 }
 
-export function ChevronDown({ size = 5, color }: IconProps): JSX.Element {
+export function CloseCircle({
+  className = 'w-8 h-8 text-gray-500 hover:text-black hover:font-bold',
+}): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -49,18 +54,39 @@ export function ChevronDown({ size = 5, color }: IconProps): JSX.Element {
       viewBox='0 0 24 24'
       strokeWidth={1.5}
       stroke='currentColor'
-      className={`h-${size} w-${size} ${color ? color : ''}`}
+      className={className}
     >
       <path
         strokeLinecap='round'
         strokeLinejoin='round'
-        d='M19.5 8.25l-7.5 7.5-7.5-7.5'
+        d='M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
       />
     </svg>
   );
 }
 
-export function ChevronRight({ size = 5, color }: IconProps): JSX.Element {
+export function PersonIcon({ className = 'h-8 w-8' }: IconProps): JSX.Element {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      fill='none'
+      viewBox='0 0 24 24'
+      strokeWidth={1.5}
+      stroke='currentColor'
+      className={className}
+    >
+      <path
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        d='M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z'
+      />
+    </svg>
+  );
+}
+
+export function ChevronRight({
+  className = 'h-5 w-5 text-gray-500',
+}: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -68,7 +94,7 @@ export function ChevronRight({ size = 5, color }: IconProps): JSX.Element {
       viewBox='0 0 24 24'
       strokeWidth={2}
       stroke='currentColor'
-      className={`h-${size} w-${size} ${color ? color : ''}`}
+      className={className}
     >
       <path
         strokeLinecap='round'
@@ -79,13 +105,36 @@ export function ChevronRight({ size = 5, color }: IconProps): JSX.Element {
   );
 }
 
-export function Boost({ size = 5, color }: IconProps): JSX.Element {
+export function ChevronDown({
+  className = 'h-5 w-5 text-gray-500',
+}: IconProps): JSX.Element {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      fill='none'
+      viewBox='0 0 24 24'
+      strokeWidth={1.5}
+      stroke='currentColor'
+      className={className}
+    >
+      <path
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        d='M19.5 8.25l-7.5 7.5-7.5-7.5'
+      />
+    </svg>
+  );
+}
+
+export function Boost({
+  className = 'h-5 w-5 text-gray-500',
+}: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 24 24'
       fill='currentColor'
-      className={`h-${size} w-${size} ${color ? color : ''}`}
+      className={className}
     >
       <path
         fillRule='evenodd'
@@ -96,26 +145,30 @@ export function Boost({ size = 5, color }: IconProps): JSX.Element {
   );
 }
 
-export function PersonAdd({ size = 5, color }: IconProps): JSX.Element {
+export function PersonAdd({
+  className = 'h-5 w-5 text-gray-500',
+}: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 24 24'
       fill='currentColor'
-      className={`h-${size} w-${size} ${color ? color : ''}`}
+      className={className}
     >
       <path d='M5.25 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM2.25 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM18.75 7.5a.75.75 0 0 0-1.5 0v2.25H15a.75.75 0 0 0 0 1.5h2.25v2.25a.75.75 0 0 0 1.5 0v-2.25H21a.75.75 0 0 0 0-1.5h-2.25V7.5Z' />
     </svg>
   );
 }
 
-export function Gear({ size = 5, color }: IconProps): JSX.Element {
+export function Gear({
+  className = 'h-5 w-5 text-gray-500',
+}: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 24 24'
       fill='currentColor'
-      className={`h-${size} w-${size} ${color ? color : ''}`}
+      className={className}
     >
       <path
         fillRule='evenodd'
@@ -126,13 +179,15 @@ export function Gear({ size = 5, color }: IconProps): JSX.Element {
   );
 }
 
-export function PlusCircle({ size = 5, color }: IconProps): JSX.Element {
+export function PlusCircle({
+  className = 'h-5 w-5 text-gray-500',
+}: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 24 24'
       fill='currentColor'
-      className={`h-${size} w-${size} ${color ? color : ''}`}
+      className={className}
     >
       <path
         fillRule='evenodd'
@@ -143,13 +198,15 @@ export function PlusCircle({ size = 5, color }: IconProps): JSX.Element {
   );
 }
 
-export function FolderPlus({ size = 5, color }: IconProps): JSX.Element {
+export function FolderPlus({
+  className = 'h-5 w-5 text-gray-500',
+}: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 24 24'
       fill='currentColor'
-      className={`h-${size} w-${size} ${color ? color : ''}`}
+      className={className}
     >
       <path
         fillRule='evenodd'
@@ -160,13 +217,15 @@ export function FolderPlus({ size = 5, color }: IconProps): JSX.Element {
   );
 }
 
-export function FaceSmile({ size = 5, color }: IconProps): JSX.Element {
+export function FaceSmile({
+  className = 'h-5 w-5 text-gray-500',
+}: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 24 24'
       fill='currentColor'
-      className={`h-${size} w-${size} ${color ? color : ''}`}
+      className={className}
     >
       <path
         fillRule='evenodd'
@@ -177,13 +236,15 @@ export function FaceSmile({ size = 5, color }: IconProps): JSX.Element {
   );
 }
 
-export function Bell({ size = 5, color }: IconProps): JSX.Element {
+export function Bell({
+  className = 'h-5 w-5 text-gray-500',
+}: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 24 24'
       fill='currentColor'
-      className={`h-${size} w-${size} ${color ? color : ''}`}
+      className={className}
     >
       <path
         fillRule='evenodd'
@@ -194,13 +255,15 @@ export function Bell({ size = 5, color }: IconProps): JSX.Element {
   );
 }
 
-export function Shield({ size = 5, color }: IconProps): JSX.Element {
+export function Shield({
+  className = 'h-5 w-5 text-gray-500',
+}: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 24 24'
       fill='currentColor'
-      className={`h-${size} w-${size} ${color ? color : ''}`}
+      className={className}
     >
       <path
         fillRule='evenodd'
@@ -211,45 +274,81 @@ export function Shield({ size = 5, color }: IconProps): JSX.Element {
   );
 }
 
-export function Pen({ size = 5, color }: IconProps): JSX.Element {
+export function Pen({
+  className = 'h-5 w-5 text-gray-500',
+}: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 24 24'
       fill='currentColor'
-      className={`h-${size} w-${size} ${color ? color : ''}`}
+      className={className}
     >
       <path d='M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z' />
     </svg>
   );
 }
 
-export function SpeakerMuted({ size = 5, color }: IconProps): JSX.Element {
+export function SpeakerMuted({
+  className = 'h-5 w-5 text-gray-500',
+}: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 24 24'
       fill='currentColor'
-      className={`h-${size} w-${size} ${color ? color : ''}`}
+      className={className}
     >
       <path d='M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 0 0 1.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06ZM17.78 9.22a.75.75 0 1 0-1.06 1.06L18.44 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06l1.72-1.72 1.72 1.72a.75.75 0 1 0 1.06-1.06L20.56 12l1.72-1.72a.75.75 0 1 0-1.06-1.06l-1.72 1.72-1.72-1.72Z' />
     </svg>
   );
 }
 
-export function LeaveServer({ size = 5, color }: IconProps): JSX.Element {
+export function LeaveServer({
+  className = 'h-5 w-5 text-gray-500',
+}: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 24 24'
       fill='currentColor'
-      className={`h-${size} w-${size} ${color ? color : ''}`}
+      className={className}
     >
       <path
         fillRule='evenodd'
         d='M7.5 3.75A1.5 1.5 0 0 0 6 5.25v13.5a1.5 1.5 0 0 0 1.5 1.5h6a1.5 1.5 0 0 0 1.5-1.5V15a.75.75 0 0 1 1.5 0v3.75a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3V5.25a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V9A.75.75 0 0 1 15 9V5.25a1.5 1.5 0 0 0-1.5-1.5h-6Zm10.72 4.72a.75.75 0 0 1 1.06 0l3 3a.75.75 0 0 1 0 1.06l-3 3a.75.75 0 1 1-1.06-1.06l1.72-1.72H9a.75.75 0 0 1 0-1.5h10.94l-1.72-1.72a.75.75 0 0 1 0-1.06Z'
         clipRule='evenodd'
       />
+    </svg>
+  );
+}
+
+export function Mic({ className = 'w-full h-full' }: IconProps): JSX.Element {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 24 24'
+      fill='currentColor'
+      className={className}
+    >
+      <path d='M8.25 4.5a3.75 3.75 0 117.5 0v8.25a3.75 3.75 0 11-7.5 0V4.5z' />
+      <path d='M6 10.5a.75.75 0 01.75.75v1.5a5.25 5.25 0 1010.5 0v-1.5a.75.75 0 011.5 0v1.5a6.751 6.751 0 01-6 6.709v2.291h3a.75.75 0 010 1.5h-7.5a.75.75 0 010-1.5h3v-2.291a6.751 6.751 0 01-6-6.709v-1.5A.75.75 0 016 10.5z' />
+    </svg>
+  );
+}
+
+export function Speaker({
+  className = 'w-full h-full',
+}: IconProps): JSX.Element {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 24 24'
+      fill='currentColor'
+      className={className}
+    >
+      <path d='M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 001.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06zM18.584 5.106a.75.75 0 011.06 0c3.808 3.807 3.808 9.98 0 13.788a.75.75 0 11-1.06-1.06 8.25 8.25 0 000-11.668.75.75 0 010-1.06z' />
+      <path d='M15.932 7.757a.75.75 0 011.061 0 6 6 0 010 8.486.75.75 0 01-1.06-1.061 4.5 4.5 0 000-6.364.75.75 0 010-1.06z' />
     </svg>
   );
 }

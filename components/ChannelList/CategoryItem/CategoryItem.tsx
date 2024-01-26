@@ -31,7 +31,7 @@ export default function CategoryItem({
               isOpen ? 'rotate-90' : ''
             } transition-all ease-in-out duration-200`}
           >
-            <ChevronRight size={4} />
+            <ChevronRight />
           </div>
           <span className='inline-block uppercase text-sm font-bold  px-2'>
             {category}
@@ -41,7 +41,7 @@ export default function CategoryItem({
           className='inline-block create-button'
           href={`/?createChannel=true&serverName=${serverName}&category=${category}`}
         >
-          <PlusIcon size={4} />
+          <PlusIcon />
         </Link>
       </div>
       {isOpen && (

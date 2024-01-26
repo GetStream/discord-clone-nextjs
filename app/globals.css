@@ -140,12 +140,12 @@ select {
 }
 
 .online-icon::after {
-  @apply block absolute h-4 w-4 bg-green-500 bottom-0 right-0 rounded-full border-2 border-gray-200;
+  @apply block absolute h-4 w-4 bg-green-600 bottom-0 right-0 rounded-full border-2 border-gray-200;
   content: '';
 }
 
 .inactive-icon::after {
-  @apply block absolute h-full w-0.5 bg-red-400 rotate-45 rounded-xl;
+  @apply block absolute h-full w-0.5 bg-red-400 rotate-45 rounded-xl m-2;
   content: '';
 }
 

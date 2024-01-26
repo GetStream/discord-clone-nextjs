@@ -1,10 +1,4 @@
-export type ListRowElement = {
-  name: string;
-  icon: JSX.Element;
-  bottomBorder?: boolean;
-  purple?: boolean;
-  red?: boolean;
-};
+import { ListRowElement } from './menuItems';
 
 export default function ChannelListMenuRow({
   name,
