@@ -47,6 +47,7 @@ const ServerList = () => {
       </button>
       <div className='border-t-2 border-t-gray-300'>
         {serverList.map((server) => {
+          console.log('Server image: ', server.image);
           return (
             <button
               key={server.name}
@@ -57,7 +58,7 @@ const ServerList = () => {
                 changeServer(server, client);
               }}
             >
-              {server.image ? (
+              {server.image && checkIfUrl(server.image) ? (
                 <Image
                   className='rounded-icon'
                   src={server.image}
@@ -66,7 +67,9 @@ const ServerList = () => {
                   alt='Server Icon'
                 />
               ) : (
-                <span className='text-sm'>{server.name.charAt(0)}</span>
+                <span className='rounded-icon bg-gray-600 w-[50px] flex items-center justify-center text-sm'>
+                  {server.name.charAt(0)}
+                </span>
               )}
             </button>
           );
@@ -81,6 +84,15 @@ const ServerList = () => {
       <CreateServerForm />
     </div>
   );
+
+  function checkIfUrl(path: string): Boolean {
+    try {
+      const _ = new URL(path);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
 };
 
 export default ServerList;
