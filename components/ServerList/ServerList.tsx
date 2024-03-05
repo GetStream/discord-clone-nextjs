@@ -14,6 +14,20 @@ const ServerList = () => {
 
   const loadServerList = useCallback(async (): Promise<void> => {
     const channels = await client.queryChannels({});
+    const serverArrayList = channels
+      .map((channel: Channel) => {
+        return {
+          name: (channel.data?.data?.server as string) ?? 'Unknown',
+          image: channel.data?.data?.image,
+        };
+      })
+      .filter((server: DiscordServer) => server.name !== 'Unknown')
+      .filter(
+        (server: DiscordServer, index, self) =>
+          index ===
+          self.findIndex((serverObject) => serverObject.name == server.name)
+      );
+    const serverSetX = new Set(serverArrayList);
     const serverSet: Set<DiscordServer> = new Set(
       channels
         .map((channel: Channel) => {
@@ -23,6 +37,11 @@ const ServerList = () => {
           };
         })
         .filter((server: DiscordServer) => server.name !== 'Unknown')
+        .filter(
+          (server: DiscordServer, index, self) =>
+            index ===
+            self.findIndex((serverObject) => serverObject.name == server.name)
+        )
     );
     const serverArray = Array.from(serverSet.values());
     setServerList(serverArray);
@@ -47,7 +66,6 @@ const ServerList = () => {
       </button>
       <div className='border-t-2 border-t-gray-300'>
         {serverList.map((server) => {
-          console.log('Server image: ', server.image);
           return (
             <button
               key={server.name}

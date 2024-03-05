@@ -126,9 +126,7 @@ export function ChevronDown({
   );
 }
 
-export function Boost({
-  className = 'h-5 w-5 text-gray-500',
-}: IconProps): JSX.Element {
+export function Boost({ className = 'h-5 w-5' }: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -145,9 +143,7 @@ export function Boost({
   );
 }
 
-export function PersonAdd({
-  className = 'h-5 w-5 text-gray-500',
-}: IconProps): JSX.Element {
+export function PersonAdd({ className = 'h-5 w-5' }: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -160,9 +156,7 @@ export function PersonAdd({
   );
 }
 
-export function Gear({
-  className = 'h-5 w-5 text-gray-500',
-}: IconProps): JSX.Element {
+export function Gear({ className = 'h-5 w-5' }: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -179,9 +173,7 @@ export function Gear({
   );
 }
 
-export function PlusCircle({
-  className = 'h-5 w-5 text-gray-500',
-}: IconProps): JSX.Element {
+export function PlusCircle({ className = 'h-5 w-5' }: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -198,9 +190,7 @@ export function PlusCircle({
   );
 }
 
-export function FolderPlus({
-  className = 'h-5 w-5 text-gray-500',
-}: IconProps): JSX.Element {
+export function FolderPlus({ className = 'h-5 w-5' }: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -217,9 +207,7 @@ export function FolderPlus({
   );
 }
 
-export function FaceSmile({
-  className = 'h-5 w-5 text-gray-500',
-}: IconProps): JSX.Element {
+export function FaceSmile({ className = 'h-5 w-5' }: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -236,9 +224,7 @@ export function FaceSmile({
   );
 }
 
-export function Bell({
-  className = 'h-5 w-5 text-gray-500',
-}: IconProps): JSX.Element {
+export function Bell({ className = 'h-5 w-5' }: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -255,9 +241,7 @@ export function Bell({
   );
 }
 
-export function Shield({
-  className = 'h-5 w-5 text-gray-500',
-}: IconProps): JSX.Element {
+export function Shield({ className = 'h-5 w-5' }: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -274,9 +258,7 @@ export function Shield({
   );
 }
 
-export function Pen({
-  className = 'h-5 w-5 text-gray-500',
-}: IconProps): JSX.Element {
+export function Pen({ className = 'h-5 w-5' }: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -290,7 +272,7 @@ export function Pen({
 }
 
 export function SpeakerMuted({
-  className = 'h-5 w-5 text-gray-500',
+  className = 'h-5 w-5',
 }: IconProps): JSX.Element {
   return (
     <svg
@@ -304,9 +286,7 @@ export function SpeakerMuted({
   );
 }
 
-export function LeaveServer({
-  className = 'h-5 w-5 text-gray-500',
-}: IconProps): JSX.Element {
+export function LeaveServer({ className = 'h-5 w-5' }: IconProps): JSX.Element {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'

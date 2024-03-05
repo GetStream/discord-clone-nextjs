@@ -16,7 +16,7 @@ export default function ChannelListMenuRow({
           red ? 'hover:bg-red-500' : ''
         } hover:text-white transition-colors ease-in-out duration-200`}
       >
-        <span className='text-sm font-medium '>{name}</span>
+        <span className='text-sm font-medium'>{name}</span>
         {icon}
       </p>
       {bottomBorder && <div className='my-1 mx-2 h-px bg-gray-300' />}

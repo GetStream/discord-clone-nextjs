@@ -20,8 +20,8 @@ export default function CategoryItem({
 }: CategoryItemProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(true);
   return (
-    <>
-      <div className='flex items-center text-gray-500 mb-2 p-2'>
+    <div className='mb-5'>
+      <div className='flex items-center text-gray-500 p-2'>
         <button
           className='flex w-full items-center justify-start'
           onClick={() => setIsOpen((currentValue) => !currentValue)}
@@ -57,6 +57,6 @@ export default function CategoryItem({
           })}
         </div>
       )}
-    </>
+    </div>
   );
 }

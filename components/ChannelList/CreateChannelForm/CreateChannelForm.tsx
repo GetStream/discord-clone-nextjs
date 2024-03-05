@@ -2,7 +2,7 @@ import { useDiscordContext } from '@/contexts/DiscordContext';
 import { UserObject } from '@/model/UserObject';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { use, useCallback, useEffect, useRef, useState } from 'react';
 import { useChatContext } from 'stream-chat-react';
 import Link from 'next/link';
 import { CloseCircle } from '../Icons';
@@ -22,20 +22,15 @@ export default function CreateChannelForm(): JSX.Element {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const router = useRouter();
 
-  const [useNewCategory, setUseNewCategory] = useState<boolean>(true);
-
   const { client } = useChatContext();
-  const { createChannel, channelsByCategories } = useDiscordContext();
+  const { createChannel } = useDiscordContext();
+  console.log('[Category] category: ', category);
   const initialState: FormState = {
     channelName: '',
     category: category ?? '',
     users: [],
   };
   const [formData, setFormData] = useState<FormState>(initialState);
-  const categories = Array.from(channelsByCategories.keys()).filter(
-    (thisCategory) => thisCategory !== category
-  );
-
   const [users, setUsers] = useState<UserObject[]>([]);
 
   const loadUsers = useCallback(async () => {
@@ -68,7 +63,7 @@ export default function CreateChannelForm(): JSX.Element {
       <Link href='/' className='absolute right-8 top-8'>
         <CloseCircle />
       </Link>
-      <h2 className='text-3xl font-bold text-gray-600'>Create new server</h2>
+      <h2 className='text-3xl font-bold text-gray-600'>Create new channel</h2>
       <form method='dialog' className='flex flex-col'>
         <label className='labelTitle' htmlFor='channelName'>
           Channel Name
@@ -87,12 +82,6 @@ export default function CreateChannelForm(): JSX.Element {
           htmlFor='category'
         >
           Category
-          <button
-            className='text-discord font-bold uppercase'
-            onClick={() => setUseNewCategory((currentValue) => !currentValue)}
-          >
-            {useNewCategory ? 'Existing' : 'New'}
-          </button>
         </label>
         <input
           type='text'
@@ -104,9 +93,11 @@ export default function CreateChannelForm(): JSX.Element {
           }
         />
         <h2 className='mb-2 labelTitle'>Add Users</h2>
-        {users.map((user) => (
-          <UserRow user={user} userChanged={userChanged} key={user.id} />
-        ))}
+        <div className='max-h-64 overflow-y-scroll'>
+          {users.map((user) => (
+            <UserRow user={user} userChanged={userChanged} key={user.id} />
+          ))}
+        </div>
 
         <button
           type='submit'
@@ -146,7 +137,7 @@ export default function CreateChannelForm(): JSX.Element {
     createChannel(
       client,
       formData.channelName,
-      category || 'Category',
+      formData.category,
       formData.users.map((user) => user.id)
     );
     setFormData(initialState);

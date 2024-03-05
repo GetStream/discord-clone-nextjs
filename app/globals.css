@@ -36,7 +36,7 @@ body {
 .serverDialog {
   top: 50%;
   left: 50%;
-  transform: translate(-100%, -50%);
+  transform: translate(-80%, -30%);
 }
 
 ::backdrop {

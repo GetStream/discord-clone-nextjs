@@ -24,7 +24,7 @@ export default function ChannelListTopBar({
       </button>
 
       {menuOpen && (
-        <div className='absolute w-full p-2'>
+        <div className='absolute w-full p-2 z-10'>
           <div className='w-full bg-white p-2 shadow-lg rounded-md'>
             {menuItems.map((option) => (
               <button
