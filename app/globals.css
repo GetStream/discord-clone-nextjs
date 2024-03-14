@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import '~stream-chat-react/dist/css/v2/index.css';
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -10,6 +12,8 @@
   --dark-discord: #4752c4;
 
   --gray-normal: #313338;
+
+  --str-chat__background-color: red;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,6 +24,10 @@
   }
 }
 
+.str-chat {
+  --str-chat__background-color: red;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -28,6 +36,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  background: red;
 }
 
 .layout {

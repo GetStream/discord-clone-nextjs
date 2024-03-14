@@ -19,6 +19,7 @@ import 'stream-chat-react/dist/css/v2/index.css';
 import CustomChannelList from '@/components/ChannelList/CustomChannelList';
 import ServerList from '@/components/ServerList/ServerList';
 import MessageComposer from '@/components/MessageList/MessageComposer/MessageComposer';
+import CustomDateSeparator from '@/components/MessageList/CustomDateSeparator/CustomDateSeparator';
 
 const userId = '7cd445eb-9af2-4505-80a9-aa8543c3343f';
 const userName = 'Harry Potter';
@@ -54,7 +55,7 @@ export default function Home() {
       <section className='flex h-screen w-screen layout'>
         <ServerList />
         <ChannelList List={CustomChannelList} sendChannelsToList={true} />
-        <Channel Input={MessageComposer}>
+        <Channel Input={MessageComposer} DateSeparator={CustomDateSeparator}>
           <Window>
             <ChannelHeader />
             <MessageList />
