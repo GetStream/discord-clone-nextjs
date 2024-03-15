@@ -5,13 +5,14 @@ import {
   Present,
 } from '@/components/ChannelList/Icons';
 import { useState } from 'react';
-import { SendButton, useMessageInputContext } from 'stream-chat-react';
+import { SendButton, useChatContext } from 'stream-chat-react';
 import { plusItems } from './plusItems';
 import ChannelListMenuRow from '@/components/ChannelList/TopBar/ChannelListMenuRow';
 
 export default function MessageComposer(): JSX.Element {
   const [plusMenuOpen, setPlusMenuOpen] = useState(false);
-  const { handleSubmit } = useMessageInputContext();
+  const { channel } = useChatContext();
+  const [message, setMessage] = useState('');
   return (
     <div className='flex mx-6 my-6 px-4 py-1 bg-composer-gray items-center justify-center space-x-4 rounded-md text-gray-600 relative'>
       <button onClick={() => setPlusMenuOpen((menuOpen) => !menuOpen)}>
@@ -35,12 +36,19 @@ export default function MessageComposer(): JSX.Element {
       <input
         className='border-transparent bg-transparent outline-none text-sm font-semibold m-0 text-gray-normal'
         type='text'
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
         placeholder='Message #general'
       />
       <Present className='w-8 h-8 hover:text-gray-800' />
       <GIF className='w-8 h-8 hover:text-gray-800' />
       <Emoji className='w-8 h-8 hover:text-gray-800' />
-      <SendButton sendMessage={handleSubmit} />
+      <SendButton
+        sendMessage={() => {
+          channel?.sendMessage({ text: message });
+          setMessage('');
+        }}
+      />
     </div>
   );
 }
