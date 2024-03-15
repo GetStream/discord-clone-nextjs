@@ -1,6 +1,6 @@
 'use client';
 
-import { ChannelFilters, ChannelOptions, ChannelSort, User } from 'stream-chat';
+import { User } from 'stream-chat';
 import {
   Chat,
   Channel,
@@ -15,7 +15,6 @@ import {
 
 import { useClient } from '../hooks/useClient';
 
-import 'stream-chat-react/dist/css/v2/index.css';
 import CustomChannelList from '@/components/ChannelList/CustomChannelList';
 import ServerList from '@/components/ServerList/ServerList';
 import MessageComposer from '@/components/MessageList/MessageComposer/MessageComposer';

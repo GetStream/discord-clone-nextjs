@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import '~stream-chat-react/dist/css/v2/index.css';
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -18,6 +20,10 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
+}
+
+.str-chat {
+  --str-chat__message-list-background-color: white;
 }
 
 body {
