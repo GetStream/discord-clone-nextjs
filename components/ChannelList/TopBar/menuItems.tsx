@@ -18,6 +18,7 @@ export type ListRowElement = {
   bottomBorder?: boolean;
   purple?: boolean;
   red?: boolean;
+  reverseOrder?: boolean;
 };
 
 export const menuItems: ListRowElement[] = [

@@ -112,22 +112,23 @@ const CreateServerForm = () => {
           required
         />
         <h2 className='mb-2 labelTitle'>Add Users</h2>
-        {users.map((user) => (
-          <div
-            key={user.id}
-            className='flex items-center justify-start w-full space-x-6 my-2'
-          >
-            <input
-              type='checkbox'
-              id={user.id}
-              name={user.id}
-              className='w-4 h-4 mb-0'
-              onChange={(event) => userBoxChecked(event.target.checked, user)}
-            />
-            <UserCard user={user} />
-          </div>
-        ))}
-
+        <div className='max-h-64 overflow-y-scroll my-4'>
+          {users.map((user) => (
+            <div
+              key={user.id}
+              className='flex items-center justify-start w-full space-x-6 my-2'
+            >
+              <input
+                type='checkbox'
+                id={user.id}
+                name={user.id}
+                className='w-4 h-4 mb-0'
+                onChange={(event) => userBoxChecked(event.target.checked, user)}
+              />
+              <UserCard user={user} />
+            </div>
+          ))}
+        </div>
         <button
           type='submit'
           className='bg-discord rounded p-3 text-white font-bold uppercase'

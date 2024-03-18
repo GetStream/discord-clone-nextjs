@@ -6,11 +6,14 @@ export default function ChannelListMenuRow({
   bottomBorder = true,
   purple = false,
   red = false,
+  reverseOrder = false,
 }: ListRowElement): JSX.Element {
   return (
     <>
       <p
-        className={`flex items-center justify-between p-2 cursor-pointer text-gray-500 ${
+        className={`flex ${
+          reverseOrder ? 'flex-row-reverse' : ''
+        } justify-between items-center p-2 cursor-pointer text-gray-500 ${
           purple ? 'text-dark-discord' : ''
         } ${red ? 'text-red-500' : ''} rounded-md hover:bg-dark-discord ${
           red ? 'hover:bg-red-500' : ''
