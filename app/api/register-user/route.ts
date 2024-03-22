@@ -21,7 +21,6 @@ export async function POST(request: Request) {
     role: 'user',
     name: mail,
   });
-  const token = serverClient.createToken(userId);
 
   const params = {
     publicMetadata: {
@@ -33,7 +32,6 @@ export async function POST(request: Request) {
   console.log('User:', updatedUser);
   const response = {
     userId: userId,
-    token: token,
     userName: mail,
   };
 
