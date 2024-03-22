@@ -38,7 +38,7 @@ body {
 
 .layout {
   display: grid;
-  grid-template-columns: auto auto 1fr;
+  grid-template-columns: 5rem auto 1fr;
 }
 
 .serverDialog {

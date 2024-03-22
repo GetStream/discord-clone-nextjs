@@ -20,6 +20,7 @@ export async function POST(request: Request) {
     id: userId,
     role: 'user',
     name: mail,
+    imageUrl: `https://getstream.io/random_png/?id=${userId}&name=${mail}`,
   });
 
   const params = {

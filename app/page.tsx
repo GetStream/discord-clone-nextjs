@@ -7,8 +7,8 @@ import { useClerk } from '@clerk/nextjs';
 import { useCallback, useEffect, useState } from 'react';
 import MyChat from '@/components/MyChat';
 
-const userId = '7cd445eb-9af2-4505-80a9-aa8543c3343f';
-const userName = 'Harry Potter';
+// const userId = '7cd445eb-9af2-4505-80a9-aa8543c3343f';
+// const userName = 'Harry Potter';
 
 const apiKey = '7cu55d72xtjs';
 // const userToken =
@@ -37,19 +37,21 @@ export default function Home() {
       console.log('[RU] myUser:', myUser);
       const userId = myUser?.id;
       const mail = myUser?.primaryEmailAddress?.emailAddress;
-      const streamResponse = await fetch('/api/register-user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: userId,
-          email: mail,
-        }),
-      });
-      const responseBody = await streamResponse.json();
-      console.log('Stream response:', responseBody);
-      return responseBody;
+      if (userId && mail) {
+        const streamResponse = await fetch('/api/register-user', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: userId,
+            email: mail,
+          }),
+        });
+        const responseBody = await streamResponse.json();
+        console.log('Stream response:', responseBody);
+        return responseBody;
+      }
     },
     [myUser]
   );
@@ -72,8 +74,8 @@ export default function Home() {
       // take user and get token
       console.log('User already registered on Stream backend');
       getUserToken(
-        myUser?.id || userId,
-        myUser?.primaryEmailAddress?.emailAddress || userName
+        myUser?.id || 'Unknown',
+        myUser?.primaryEmailAddress?.emailAddress || 'Unknown'
       );
     }
   }, [registerUser, myUser]);

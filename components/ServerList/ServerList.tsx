@@ -13,7 +13,10 @@ const ServerList = () => {
   const [serverList, setServerList] = useState<DiscordServer[]>([]);
 
   const loadServerList = useCallback(async (): Promise<void> => {
-    const channels = await client.queryChannels({});
+    const channels = await client.queryChannels({
+      type: 'messaging',
+      members: { $in: [client.userID as string] },
+    });
     const serverArrayList = channels
       .map((channel: Channel) => {
         return {

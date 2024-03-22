@@ -84,7 +84,7 @@ const CreateServerForm = () => {
         </svg>
       </Link>
       <h2 className='text-3xl font-bold text-gray-600'>Create new server</h2>
-      <form method='dialog' action={createClicked} className='flex flex-col'>
+      <form action={createClicked} className='flex flex-col'>
         <label className='labelTitle' htmlFor='serverName'>
           Server Name
         </label>
