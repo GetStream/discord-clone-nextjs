@@ -2,11 +2,14 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { Gear, Mic, Speaker } from '../Icons';
 import { useChatContext } from 'stream-chat-react';
+import { auth, clerkClient, useClerk } from '@clerk/nextjs';
 
 export default function ChannelListBottomBar(): JSX.Element {
   const { client } = useChatContext();
   const [micActive, setMicActive] = useState(false);
   const [audioActive, setAudioActive] = useState(false);
+
+  const { signOut } = useClerk();
 
   return (
     <div className='mt-auto p-2 bg-light-gray w-full flex items-center justify-between'>
@@ -49,9 +52,17 @@ export default function ChannelListBottomBar(): JSX.Element {
       >
         <Speaker />
       </button>
-      <button className='w-7 h-7 p-1 flex items-center justify-center relative rounded-md hover:bg-gray-300 transition-all duration-100 ease-in-out text-gray-700'>
+      <button
+        className='w-7 h-7 p-1 flex items-center justify-center relative rounded-md hover:bg-gray-300 transition-all duration-100 ease-in-out text-gray-700'
+        onClick={logOut}
+      >
         <Gear className='w-full h-full' />
       </button>
     </div>
   );
+
+  function logOut() {
+    console.log('Signing out');
+    signOut();
+  }
 }
