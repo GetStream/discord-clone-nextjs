@@ -63,7 +63,7 @@ export default function ChannelListBottomBar(): JSX.Element {
       {menuOpen && (
         <button
           className='absolute -top-12 -left-1 w-52 p-2 bg-white rounded-md shadow-md'
-          onClick={logOut}
+          onClick={() => signOut()}
         >
           <ChannelListMenuRow
             name='Sign out'
@@ -75,9 +75,4 @@ export default function ChannelListBottomBar(): JSX.Element {
       )}
     </div>
   );
-
-  function logOut() {
-    console.log('Signing out');
-    signOut();
-  }
 }
