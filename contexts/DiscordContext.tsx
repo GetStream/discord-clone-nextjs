@@ -3,7 +3,7 @@
 import { DiscordServer } from '@/app/page';
 import { createContext, useCallback, useContext, useState } from 'react';
 import { Channel, ChannelFilters, StreamChat } from 'stream-chat';
-import { DefaultStreamChatGenerics } from 'stream-chat-react/dist/types/types';
+import { DefaultStreamChatGenerics } from 'stream-chat-react';
 import { v4 as uuid } from 'uuid';
 
 type DiscordState = {
@@ -44,12 +44,12 @@ export const DiscordContextProvider: any = ({
   const changeServer = useCallback(
     async (server: DiscordServer | undefined, client: StreamChat) => {
       console.log('[changeServer] server: ', server);
-      let filters: ChannelFilters = {};
+      let filters: ChannelFilters = {
+        type: 'messaging',
+        members: { $in: [client.userID as string] },
+      };
       if (!server) {
-        filters = {
-          type: 'messaging',
-          member_count: 2,
-        };
+        filters.member_count = 2;
       }
 
       const channels = await client.queryChannels(filters);
