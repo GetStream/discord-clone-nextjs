@@ -29,7 +29,7 @@ type DiscordState = {
     serverName: string,
     channelName: string,
     userIds: string[]
-  ) => void;
+  ) => Promise<void>;
 };
 
 const initialValue: DiscordState = {
@@ -38,7 +38,7 @@ const initialValue: DiscordState = {
   changeServer: () => {},
   createServer: () => {},
   createChannel: () => {},
-  createCall: () => {},
+  createCall: async () => {},
 };
 
 const DiscordContext = createContext<DiscordState>(initialValue);
