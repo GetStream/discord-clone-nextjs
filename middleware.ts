@@ -22,7 +22,10 @@ export default authMiddleware({
     if (auth.userId && !auth.user?.privateMetadata?.streamRegistered) {
       // return redirect('/register');
     } else {
-      console.log('User already registered on Stream backend');
+      console.log(
+        '[Middleware] User already registered on Stream backend: ',
+        auth.userId
+      );
     }
 
     return NextResponse.next();
