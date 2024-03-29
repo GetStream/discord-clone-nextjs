@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     process.env.STREAM_CHAT_SECRET
   );
   const body = await request.json();
-  console.log('Body:', body);
+  console.log('[/api/register-user] Body:', body);
 
   const userId = body?.userId;
   const mail = body?.email;
@@ -30,7 +30,7 @@ export async function POST(request: Request) {
   };
   const updatedUser = await clerkClient.users.updateUser(userId, params);
 
-  console.log('User:', updatedUser);
+  console.log('[/api/register-user] User:', updatedUser);
   const response = {
     userId: userId,
     userName: mail,

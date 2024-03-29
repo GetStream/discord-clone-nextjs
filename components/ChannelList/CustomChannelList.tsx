@@ -18,7 +18,6 @@ import CallList from './CallList/CallList';
 const CustomChannelList: React.FC<ChannelListMessengerProps> = (
   props: PropsWithChildren<ChannelListMessengerProps>
 ) => {
-  console.log('[CustomChannelList]');
   const { server } = useDiscordContext();
   const channelsByCategories = splitChannelsIntoCategories(
     props.loadedChannels || [],

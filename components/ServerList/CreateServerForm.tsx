@@ -15,8 +15,6 @@ type FormState = {
 };
 
 const CreateServerForm = () => {
-  console.log('[CreateServerForm]');
-
   // Check if we are shown
   const params = useSearchParams();
   const showCreateServerForm = params.get('createServer');

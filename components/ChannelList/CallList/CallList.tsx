@@ -75,7 +75,6 @@ export default function CallList(): JSX.Element {
               key={call.id}
               className='w-full flex items-center my-1 px-2 py-1 hover:bg-gray-200 rounded-md'
               onClick={() => {
-                console.log('Joining call', call.id);
                 setCall(call.id);
               }}
             >

@@ -45,10 +45,6 @@ export const CustomReactionSelector = forwardRef<
 
   const handleReaction = useCallback(
     async (reactionType: any, event: any) => {
-      // your custom logic with default behavior (minus optimistic updates)
-
-      console.log({ event });
-
       const hasReactedWithType =
         (ownReactions ?? []).some(
           (reaction) => reaction.type === reactionType

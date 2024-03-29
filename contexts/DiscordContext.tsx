@@ -56,7 +56,6 @@ export const DiscordContextProvider: any = ({
 
   const changeServer = useCallback(
     async (server: DiscordServer | undefined, client: StreamChat) => {
-      console.log('[changeServer] server: ', server);
       let filters: ChannelFilters = {
         type: 'messaging',
         members: { $in: [client.userID as string] },
@@ -65,7 +64,10 @@ export const DiscordContextProvider: any = ({
         filters.member_count = 2;
       }
 
-      console.log('[loadServerList] Querying channels for ', client.userID);
+      console.log(
+        '[DiscordContext - loadServerList] Querying channels for ',
+        client.userID
+      );
       const channels = await client.queryChannels(filters);
       const channelsByCategories = new Map<
         string,
@@ -130,19 +132,19 @@ export const DiscordContextProvider: any = ({
 
       try {
         const response = await messagingChannel.create();
-        console.log('[createServer] Response: ', response);
+        console.log('[DiscordContext - createServer] Response: ', response);
         const createdAudioCall = await audioCall.create({
           data: {
             custom: {
               serverName: name,
+              channelName: 'General Voice Channel',
             },
             members: audioChannelMembers,
           },
         });
-        console.log('[createServer] Audio Call: ', createdAudioCall);
         changeServer({ name, image: imageUrl }, client);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     },
     [changeServer]
@@ -166,7 +168,6 @@ export const DiscordContextProvider: any = ({
         });
         try {
           const response = await channel.create();
-          console.log('[createChannel] Response: ', response);
         } catch (err) {
           console.log(err);
         }
@@ -199,7 +200,6 @@ export const DiscordContextProvider: any = ({
             members: audioChannelMembers,
           },
         });
-        console.log('[createCall] Audio Call: ', createdAudioCall);
       } catch (err) {
         console.log(err);
       }

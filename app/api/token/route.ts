@@ -6,7 +6,7 @@ export async function POST(request: Request) {
     process.env.STREAM_CHAT_SECRET
   );
   const body = await request.json();
-  console.log('Body:', body);
+  console.log('[/api/token] Body:', body);
 
   const userId = body?.userId;
 

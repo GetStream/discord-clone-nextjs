@@ -15,7 +15,6 @@ type FormState = {
 };
 
 export default function CreateChannelForm(): JSX.Element {
-  console.log('[CreateChannelForm]');
   const params = useSearchParams();
   const showCreateChannelForm = params.get('createChannel');
   const category = params.get('category');
@@ -24,7 +23,6 @@ export default function CreateChannelForm(): JSX.Element {
 
   const { client } = useChatContext();
   const { createChannel } = useDiscordContext();
-  console.log('[Category] category: ', category);
   const initialState: FormState = {
     channelName: '',
     category: category ?? '',
@@ -44,10 +42,6 @@ export default function CreateChannelForm(): JSX.Element {
   }, [loadUsers]);
 
   useEffect(() => {
-    console.log(
-      '[CreateChannelForm] showCreateChannelForm',
-      showCreateChannelForm
-    );
     if (showCreateChannelForm && dialogRef.current) {
       dialogRef.current.showModal();
     } else {

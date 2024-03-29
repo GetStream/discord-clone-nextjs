@@ -26,7 +26,6 @@ export type Homestate = {
 };
 
 export default function Home() {
-  console.log('[Create]');
   const [myState, setMyState] = useState<Homestate | undefined>(undefined);
 
   const { user: myUser } = useClerk();
@@ -34,7 +33,7 @@ export default function Home() {
   const registerUser = useCallback(
     async function registerUser() {
       // register user on Stream backend
-      console.log('[RU] myUser:', myUser);
+      console.log('[registerUser] myUser:', myUser);
       const userId = myUser?.id;
       const mail = myUser?.primaryEmailAddress?.emailAddress;
       if (userId && mail) {
@@ -49,7 +48,7 @@ export default function Home() {
           }),
         });
         const responseBody = await streamResponse.json();
-        console.log('Stream response:', responseBody);
+        console.log('[registerUser] Stream response:', responseBody);
         return responseBody;
       }
     },
@@ -62,9 +61,9 @@ export default function Home() {
       myUser?.primaryEmailAddress?.emailAddress &&
       !myUser?.publicMetadata.streamRegistered
     ) {
-      console.log('Registering user on Stream backend');
+      console.log('[Page - useEffect] Registering user on Stream backend');
       registerUser().then((result) => {
-        console.log('Result: ', result);
+        console.log('[Page - useEffect] Result: ', result);
         getUserToken(
           myUser.id,
           myUser?.primaryEmailAddress?.emailAddress || 'Unknown'
@@ -74,7 +73,7 @@ export default function Home() {
       // take user and get token
       if (myUser?.id) {
         console.log(
-          '[Page] User already registered on Stream backend: ',
+          '[Page - useEffect] User already registered on Stream backend: ',
           myUser?.id
         );
         getUserToken(
