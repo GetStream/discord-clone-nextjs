@@ -21,6 +21,7 @@ import { useVideoClient } from '@/hooks/useVideoClient';
 import { StreamVideo } from '@stream-io/video-react-sdk';
 import { useDiscordContext } from '@/contexts/DiscordContext';
 import MyCall from '@/components/MyCall/MyCall';
+import CustomChannelHeader from './MessageList/CustomChannelHeader/CustomChannelHeader';
 
 export default function MyChat({
   apiKey,
@@ -64,9 +65,9 @@ export default function MyChat({
               Input={MessageComposer}
               DateSeparator={CustomDateSeparator}
               reactionOptions={customReactionOptions}
+              HeaderComponent={CustomChannelHeader}
             >
               <Window>
-                <ChannelHeader />
                 <MessageList />
                 <MessageInput />
               </Window>

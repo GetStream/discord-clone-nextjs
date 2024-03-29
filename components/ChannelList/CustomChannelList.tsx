@@ -1,28 +1,16 @@
 'use client';
 
-import { PropsWithChildren } from 'react';
-import {
-  ChannelListMessengerProps,
-  DefaultStreamChatGenerics,
-} from 'stream-chat-react';
+import { ChannelListMessengerProps } from 'stream-chat-react';
 
 import { useDiscordContext } from '@/contexts/DiscordContext';
 import CreateChannelForm from './CreateChannelForm/CreateChannelForm';
 import UserBar from './BottomBar/ChannelListBottomBar';
-import { Channel } from 'stream-chat';
-import { DiscordServer } from '@/app/page';
 import ChannelListTopBar from './TopBar/ChannelListTopBar';
 import CategoryItem from './CategoryItem/CategoryItem';
 import CallList from './CallList/CallList';
 
-const CustomChannelList: React.FC<ChannelListMessengerProps> = (
-  props: PropsWithChildren<ChannelListMessengerProps>
-) => {
-  const { server } = useDiscordContext();
-  const channelsByCategories = splitChannelsIntoCategories(
-    props.loadedChannels || [],
-    server
-  );
+const CustomChannelList: React.FC<ChannelListMessengerProps> = () => {
+  const { server, channelsByCategories } = useDiscordContext();
 
   return (
     <div className='w-72 bg-medium-gray h-full flex flex-col items-start'>
@@ -44,41 +32,5 @@ const CustomChannelList: React.FC<ChannelListMessengerProps> = (
     </div>
   );
 };
-
-function splitChannelsIntoCategories(
-  channels: Channel<DefaultStreamChatGenerics>[],
-  server: DiscordServer | undefined
-): Map<string, Array<Channel<DefaultStreamChatGenerics>>> {
-  const channelsByCategories = new Map<
-    string,
-    Array<Channel<DefaultStreamChatGenerics>>
-  >();
-  if (server) {
-    const categories = new Set(
-      channels
-        .filter((channel) => {
-          return channel.data?.data?.server === server.name;
-        })
-        .map((channel) => {
-          return channel.data?.data?.category;
-        })
-    );
-
-    for (const category of Array.from(categories)) {
-      channelsByCategories.set(
-        category,
-        channels.filter((channel) => {
-          return (
-            channel.data?.data?.server === server.name &&
-            channel.data?.data?.category === category
-          );
-        })
-      );
-    }
-  } else {
-    channelsByCategories.set('Direct Messages', channels);
-  }
-  return channelsByCategories;
-}
 
 export default CustomChannelList;

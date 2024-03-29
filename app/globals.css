@@ -24,6 +24,7 @@
 
 .str-chat {
   --str-chat__message-list-background-color: white;
+  --str-chat__spacing-10: 0;
 }
 
 body {

@@ -29,7 +29,7 @@ export default function CallList(): JSX.Element {
 
   return (
     <div className='w-full my-2'>
-      <div className='flex'>
+      <div className='flex text-gray-500'>
         <button
           className='flex w-full items-center justify-start mb-1 px-2'
           onClick={() => setIsOpen((currentValue) => !currentValue)}
@@ -78,8 +78,10 @@ export default function CallList(): JSX.Element {
                 setCall(call.id);
               }}
             >
-              <Speaker className='w-6 h-6 text-gray-500 mr-2' />
-              <span className={`${call.id === callId ? 'font-bold' : ''}`}>
+              <Speaker className='w-5 h-5 text-gray-500 mr-2' />
+              <span
+                className={`text-sm ${call.id === callId ? 'font-bold' : ''}`}
+              >
                 {call.state.custom.callName || 'Channel Preview'}
               </span>
             </button>
