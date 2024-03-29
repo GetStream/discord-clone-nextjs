@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { ChevronRight, PlusIcon, Speaker } from '../Icons';
 
 export default function CallList(): JSX.Element {
-  const { server, createCall } = useDiscordContext();
+  const { server, callId, createCall, setCall } = useDiscordContext();
   const client = useStreamVideoClient();
 
   const [isOpen, setIsOpen] = useState<boolean>(true);
@@ -22,6 +22,8 @@ export default function CallList(): JSX.Element {
       setCalls(callsRequest?.calls);
     }
   }, [client, server]);
+
+  console.log('[MyChat] CallList callId:', callId);
 
   useEffect(() => {
     loadAudioChannels();
@@ -74,7 +76,10 @@ export default function CallList(): JSX.Element {
             <button
               key={call.id}
               className='w-full flex items-center my-1 px-2 py-1 hover:bg-gray-200 rounded-md'
-              onClick={() => console.log('Joining call', call.id)}
+              onClick={() => {
+                console.log('Joining call', call.id);
+                setCall(call.id);
+              }}
             >
               <Speaker className='w-6 h-6 text-gray-500 mr-2' />
               <span className=''>

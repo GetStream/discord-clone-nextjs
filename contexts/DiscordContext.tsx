@@ -9,6 +9,7 @@ import { v4 as uuid } from 'uuid';
 
 type DiscordState = {
   server?: DiscordServer;
+  callId: string | undefined;
   channelsByCategories: Map<string, Array<Channel<DefaultStreamChatGenerics>>>;
   changeServer: (server: DiscordServer | undefined, client: StreamChat) => void;
   createServer: (
@@ -30,15 +31,18 @@ type DiscordState = {
     channelName: string,
     userIds: string[]
   ) => Promise<void>;
+  setCall: (callId: string | undefined) => void;
 };
 
 const initialValue: DiscordState = {
   server: undefined,
+  callId: undefined,
   channelsByCategories: new Map(),
   changeServer: () => {},
   createServer: () => {},
   createChannel: () => {},
   createCall: async () => {},
+  setCall: () => {},
 };
 
 const DiscordContext = createContext<DiscordState>(initialValue);
@@ -203,13 +207,24 @@ export const DiscordContextProvider: any = ({
     []
   );
 
+  const setCall = useCallback(
+    (callId: string | undefined) => {
+      setMyState((myState) => {
+        return { ...myState, callId };
+      });
+    },
+    [setMyState]
+  );
+
   const store: DiscordState = {
     server: myState.server,
+    callId: myState.callId,
     channelsByCategories: myState.channelsByCategories,
     changeServer: changeServer,
     createServer: createServer,
     createChannel: createChannel,
     createCall: createCall,
+    setCall: setCall,
   };
 
   return (

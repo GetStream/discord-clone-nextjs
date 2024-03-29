@@ -19,6 +19,7 @@ import CustomMessage from '@/components/MessageList/CustomMessage/CustomMessage'
 import { customReactionOptions } from '@/components/MessageList/CustomReactions/CustomReactionsSelector';
 import { useVideoClient } from '@/hooks/useVideoClient';
 import { StreamVideo } from '@stream-io/video-react-sdk';
+import { useDiscordContext } from '@/contexts/DiscordContext';
 
 export default function MyChat({
   apiKey,
@@ -39,6 +40,7 @@ export default function MyChat({
     user,
     tokenOrProvider: token,
   });
+  const { callId } = useDiscordContext();
 
   if (!chatClient) {
     return <div>Error, please try again later.</div>;
@@ -54,19 +56,22 @@ export default function MyChat({
         <section className='flex h-screen w-screen layout'>
           <ServerList />
           <ChannelList List={CustomChannelList} sendChannelsToList={true} />
-          <Channel
-            Message={CustomMessage}
-            Input={MessageComposer}
-            DateSeparator={CustomDateSeparator}
-            reactionOptions={customReactionOptions}
-          >
-            <Window>
-              <ChannelHeader />
-              <MessageList />
-              <MessageInput />
-            </Window>
-            <Thread />
-          </Channel>
+          {callId && <div>Call {callId} is active </div>}
+          {!callId && (
+            <Channel
+              Message={CustomMessage}
+              Input={MessageComposer}
+              DateSeparator={CustomDateSeparator}
+              reactionOptions={customReactionOptions}
+            >
+              <Window>
+                <ChannelHeader />
+                <MessageList />
+                <MessageInput />
+              </Window>
+              <Thread />
+            </Channel>
+          )}
         </section>
       </Chat>
     </StreamVideo>
