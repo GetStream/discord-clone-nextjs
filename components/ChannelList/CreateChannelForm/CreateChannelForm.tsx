@@ -51,7 +51,7 @@ export default function CreateChannelForm(): JSX.Element {
 
   return (
     <dialog
-      className='absolute py-16 px-20 z-10 space-y-8 rounded-xl serverDialog'
+      className='absolute py-16 px-20 z-10 space-y-8 rounded-xl'
       ref={dialogRef}
     >
       <Link href='/' className='absolute right-8 top-8'>
