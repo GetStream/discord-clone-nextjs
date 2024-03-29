@@ -72,11 +72,16 @@ export default function Home() {
       });
     } else {
       // take user and get token
-      console.log('User already registered on Stream backend');
-      getUserToken(
-        myUser?.id || 'Unknown',
-        myUser?.primaryEmailAddress?.emailAddress || 'Unknown'
-      );
+      if (myUser?.id) {
+        console.log(
+          '[Page] User already registered on Stream backend: ',
+          myUser?.id
+        );
+        getUserToken(
+          myUser?.id || 'Unknown',
+          myUser?.primaryEmailAddress?.emailAddress || 'Unknown'
+        );
+      }
     }
   }, [registerUser, myUser]);
 

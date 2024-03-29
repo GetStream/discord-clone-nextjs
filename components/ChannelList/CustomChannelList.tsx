@@ -1,16 +1,19 @@
 'use client';
 
 import { PropsWithChildren } from 'react';
-import { ChannelListMessengerProps } from 'stream-chat-react';
+import {
+  ChannelListMessengerProps,
+  DefaultStreamChatGenerics,
+} from 'stream-chat-react';
 
 import { useDiscordContext } from '@/contexts/DiscordContext';
 import CreateChannelForm from './CreateChannelForm/CreateChannelForm';
 import UserBar from './BottomBar/ChannelListBottomBar';
 import { Channel } from 'stream-chat';
-import { DefaultStreamChatGenerics } from 'stream-chat-react/dist/types/types';
 import { DiscordServer } from '@/app/page';
 import ChannelListTopBar from './TopBar/ChannelListTopBar';
 import CategoryItem from './CategoryItem/CategoryItem';
+import CallList from './CallList/CallList';
 
 const CustomChannelList: React.FC<ChannelListMessengerProps> = (
   props: PropsWithChildren<ChannelListMessengerProps>
@@ -36,6 +39,7 @@ const CustomChannelList: React.FC<ChannelListMessengerProps> = (
           />
         ))}
       </div>
+      <CallList />
       <CreateChannelForm />
       <UserBar />
     </div>

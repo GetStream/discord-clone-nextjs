@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useChatContext } from 'stream-chat-react';
 import UserCard from './UserCard';
+import { useStreamVideoClient } from '@stream-io/video-react-sdk';
 
 type FormState = {
   serverName: string;
@@ -24,6 +25,7 @@ const CreateServerForm = () => {
 
   // Data
   const { client } = useChatContext();
+  const videoClient = useStreamVideoClient();
   const { createServer } = useDiscordContext();
   const initialState: FormState = {
     serverName: '',
@@ -154,8 +156,13 @@ const CreateServerForm = () => {
   }
 
   function createClicked() {
+    if (!videoClient) {
+      console.log('[CreateServerForm] Video client not available');
+      return;
+    }
     createServer(
       client,
+      videoClient,
       formData.serverName,
       formData.serverImage,
       formData.users.map((user) => user.id)

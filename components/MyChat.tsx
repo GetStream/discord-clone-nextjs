@@ -17,6 +17,10 @@ import MessageComposer from '@/components/MessageList/MessageComposer/MessageCom
 import CustomDateSeparator from '@/components/MessageList/CustomDateSeparator/CustomDateSeparator';
 import CustomMessage from '@/components/MessageList/CustomMessage/CustomMessage';
 import { customReactionOptions } from '@/components/MessageList/CustomReactions/CustomReactionsSelector';
+import { useVideoClient } from '@/hooks/useVideoClient';
+import { StreamVideo } from '@stream-io/video-react-sdk';
+import { useDiscordContext } from '@/contexts/DiscordContext';
+import MyCall from '@/components/MyCall/MyCall';
 
 export default function MyChat({
   apiKey,
@@ -32,30 +36,45 @@ export default function MyChat({
     user,
     tokenOrProvider: token,
   });
+  const videoClient = useVideoClient({
+    apiKey,
+    user,
+    tokenOrProvider: token,
+  });
+  const { callId } = useDiscordContext();
 
   if (!chatClient) {
     return <div>Error, please try again later.</div>;
   }
 
+  if (!videoClient) {
+    return <div>Video Error, please try again later.</div>;
+  }
+
   return (
-    <Chat client={chatClient} theme='str-chat__theme-light'>
-      <section className='flex h-screen w-screen layout'>
-        <ServerList />
-        <ChannelList List={CustomChannelList} sendChannelsToList={true} />
-        <Channel
-          Message={CustomMessage}
-          Input={MessageComposer}
-          DateSeparator={CustomDateSeparator}
-          reactionOptions={customReactionOptions}
-        >
-          <Window>
-            <ChannelHeader />
-            <MessageList />
-            <MessageInput />
-          </Window>
-          <Thread />
-        </Channel>
-      </section>
-    </Chat>
+    <StreamVideo client={videoClient}>
+      <Chat client={chatClient} theme='str-chat__theme-light'>
+        <section className='flex h-screen w-screen layout'>
+          <ServerList />
+          <ChannelList List={CustomChannelList} sendChannelsToList={true} />
+          {callId && <MyCall callId={callId} />}
+          {!callId && (
+            <Channel
+              Message={CustomMessage}
+              Input={MessageComposer}
+              DateSeparator={CustomDateSeparator}
+              reactionOptions={customReactionOptions}
+            >
+              <Window>
+                <ChannelHeader />
+                <MessageList />
+                <MessageInput />
+              </Window>
+              <Thread />
+            </Channel>
+          )}
+        </section>
+      </Chat>
+    </StreamVideo>
   );
 }

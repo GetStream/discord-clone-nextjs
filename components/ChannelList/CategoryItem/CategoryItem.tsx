@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { Channel } from 'stream-chat';
-import { DefaultStreamChatGenerics } from 'stream-chat-react/dist/types/types';
 import CustomChannelPreview from '../CustomChannelPreview';
 import { useState } from 'react';
 import { ChevronRight, PlusIcon } from '../Icons';
 
 import './CategoryItem.css';
+import { DefaultStreamChatGenerics } from 'stream-chat-react';
 
 type CategoryItemProps = {
   category: string;
@@ -33,7 +33,7 @@ export default function CategoryItem({
           >
             <ChevronRight />
           </div>
-          <span className='inline-block uppercase text-sm font-bold  px-2'>
+          <span className='inline-block uppercase text-sm font-bold px-2'>
             {category}
           </span>
         </button>

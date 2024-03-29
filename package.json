@@ -11,6 +11,7 @@
   "dependencies": {
     "@clerk/backend": "^0.38.3",
     "@clerk/nextjs": "^4.29.9",
+    "@stream-io/video-react-sdk": "^0.5.5",
     "@types/uuid": "^9.0.8",
     "next": "14.0.3",
     "react": "^18.2.0",
