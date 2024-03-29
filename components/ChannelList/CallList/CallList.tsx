@@ -23,8 +23,6 @@ export default function CallList(): JSX.Element {
     }
   }, [client, server]);
 
-  console.log('[MyChat] CallList callId:', callId);
-
   useEffect(() => {
     loadAudioChannels();
   }, [loadAudioChannels]);
@@ -82,7 +80,7 @@ export default function CallList(): JSX.Element {
               }}
             >
               <Speaker className='w-6 h-6 text-gray-500 mr-2' />
-              <span className=''>
+              <span className={`${call.id === callId ? 'font-bold' : ''}`}>
                 {call.state.custom.callName || 'Channel Preview'}
               </span>
             </button>

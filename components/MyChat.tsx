@@ -20,6 +20,7 @@ import { customReactionOptions } from '@/components/MessageList/CustomReactions/
 import { useVideoClient } from '@/hooks/useVideoClient';
 import { StreamVideo } from '@stream-io/video-react-sdk';
 import { useDiscordContext } from '@/contexts/DiscordContext';
+import MyCall from '@/components/MyCall/MyCall';
 
 export default function MyChat({
   apiKey,
@@ -56,7 +57,7 @@ export default function MyChat({
         <section className='flex h-screen w-screen layout'>
           <ServerList />
           <ChannelList List={CustomChannelList} sendChannelsToList={true} />
-          {callId && <div>Call {callId} is active </div>}
+          {callId && <MyCall callId={callId} />}
           {!callId && (
             <Channel
               Message={CustomMessage}
