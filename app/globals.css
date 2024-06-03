@@ -48,12 +48,25 @@ body {
 }
 
 .labelTitle {
-  @apply mb-2 uppercase text-sm font-bold text-gray-500;
+  @apply uppercase text-sm font-bold text-gray-600;
 }
 
 input,
 select {
-  @apply w-full p-2 border border-gray-400 rounded mb-8;
+  @apply w-full p-2 rounded;
+}
+
+input[type='text'] {
+  @apply bg-transparent outline-transparent;
+}
+
+input[type='text']:focus {
+  outline: none;
+}
+
+input[type='radio'] {
+  @apply w-8 h-8 mb-0;
+  accent-color: black;
 }
 
 .rounded-icon {
@@ -94,37 +107,6 @@ select {
   --content-height: 2rem;
   --content-width: 0.5rem;
   --offset: -0.15rem;
-}
-
-.server-icon {
-  @apply flex items-center justify-center w-full relative transition-all duration-200;
-  border-radius: 50%;
-  background-origin: content-box;
-}
-
-.server-icon:hover {
-  border-radius: 1rem;
-}
-
-.server-icon::before {
-  @apply transition-all duration-200;
-  --content-height: 0rem;
-  --content-width: 0rem;
-  --offset: -1.15rem;
-  content: '';
-  display: block;
-  height: var(--content-height);
-  width: var(--content-width);
-  background: black;
-  position: absolute;
-  border-radius: 3px;
-  left: var(--offset);
-}
-
-.server-icon:hover::before {
-  --content-height: 1.25rem;
-  --content-width: 0.5rem;
-  --offset: -1.1rem;
 }
 
 .discord-icon {

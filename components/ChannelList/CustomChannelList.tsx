@@ -1,5 +1,3 @@
-'use client';
-
 import { ChannelListMessengerProps } from 'stream-chat-react';
 
 import { useDiscordContext } from '@/contexts/DiscordContext';

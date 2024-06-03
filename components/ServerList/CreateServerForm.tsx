@@ -5,8 +5,9 @@ import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useChatContext } from 'stream-chat-react';
-import UserCard from './UserCard';
 import { useStreamVideoClient } from '@stream-io/video-react-sdk';
+import { CloseMark } from '../ChannelList/Icons';
+import UserRow from '../ChannelList/CreateChannelForm/UserRow';
 
 type FormState = {
   serverName: string;
@@ -63,83 +64,82 @@ const CreateServerForm = () => {
   }, [loadUsers]);
 
   return (
-    <dialog
-      className='absolute py-16 px-20 z-10 space-y-8 rounded-xl'
-      ref={dialogRef}
-    >
-      <Link href='/' className='absolute right-8 top-8'>
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          fill='none'
-          viewBox='0 0 24 24'
-          strokeWidth={1.5}
-          stroke='currentColor'
-          className='w-8 h-8 text-gray-500 hover:text-black hover:font-bold'
-        >
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            d='M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
-          />
-        </svg>
-      </Link>
-      <h2 className='text-3xl font-bold text-gray-600'>Create new server</h2>
-      <form action={createClicked} className='flex flex-col'>
+    <dialog className='absolute z-10 space-y-2 rounded-xl' ref={dialogRef}>
+      <div className='w-full flex items-center justify-between py-8 px-6'>
+        <h2 className='text-3xl font-semibold text-gray-600'>
+          Create new server
+        </h2>
+        <Link href='/'>
+          <CloseMark className='w-10 h-10 text-gray-400' />
+        </Link>
+      </div>
+      <form method='dialog' className='flex flex-col space-y-2 px-6'>
         <label className='labelTitle' htmlFor='serverName'>
           Server Name
         </label>
-        <input
-          type='text'
-          id='serverName'
-          name='serverName'
-          value={formData.serverName}
-          onChange={(e) =>
-            setFormData({ ...formData, serverName: e.target.value })
-          }
-          required
-        />
+        <div className='flex items-center bg-gray-100'>
+          <span className='text-2xl p-2 text-gray-500'>#</span>
+          <input
+            type='text'
+            id='serverName'
+            name='serverName'
+            value={formData.serverName}
+            onChange={(e) =>
+              setFormData({ ...formData, serverName: e.target.value })
+            }
+            required
+          />
+        </div>
         <label className='labelTitle' htmlFor='serverImage'>
           Image URL
         </label>
-        <input
-          type='text'
-          id='serverImage'
-          name='serverImage'
-          value={formData.serverImage}
-          onChange={(e) =>
-            setFormData({ ...formData, serverImage: e.target.value })
-          }
-          required
-        />
+        <div className='flex items-center bg-gray-100'>
+          <span className='text-2xl p-2 text-gray-500'>#</span>
+          <input
+            type='text'
+            id='serverImage'
+            name='serverImage'
+            value={formData.serverImage}
+            onChange={(e) =>
+              setFormData({ ...formData, serverImage: e.target.value })
+            }
+            required
+          />
+        </div>
         <h2 className='mb-2 labelTitle'>Add Users</h2>
-        <div className='max-h-64 overflow-y-scroll my-4'>
+        <div className='max-h-64 overflow-y-scroll'>
           {users.map((user) => (
-            <div
-              key={user.id}
-              className='flex items-center justify-start w-full space-x-6 my-2'
-            >
-              <input
-                type='checkbox'
-                id={user.id}
-                name={user.id}
-                className='w-4 h-4 mb-0'
-                onChange={(event) => userBoxChecked(event.target.checked, user)}
-              />
-              <UserCard user={user} />
-            </div>
+            <UserRow user={user} userChanged={userChanged} key={user.id} />
           ))}
         </div>
+      </form>
+      <div className='flex space-x-6 items-center justify-end p-6 bg-gray-200'>
+        <Link href={'/'} className='font-semibold text-gray-500'>
+          Cancel
+        </Link>
         <button
           type='submit'
-          className='bg-discord rounded p-3 text-white font-bold uppercase'
+          disabled={buttonDisabled()}
+          className={`bg-discord rounded py-2 px-4 text-white font-bold uppercase ${
+            buttonDisabled() ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
+          onClick={createClicked}
         >
-          Create
+          Create Server
         </button>
-      </form>
+      </div>
     </dialog>
   );
 
-  function userBoxChecked(checked: Boolean, user: UserObject) {
+  function buttonDisabled(): boolean {
+    return (
+      !formData.serverName ||
+      !formData.serverImage ||
+      formData.users.length <= 1
+    );
+  }
+
+  function userChanged(user: UserObject, checked: boolean) {
     if (checked) {
       setFormData({
         ...formData,
@@ -148,7 +148,7 @@ const CreateServerForm = () => {
     } else {
       setFormData({
         ...formData,
-        users: formData.users.filter((u) => u.id !== user.id),
+        users: formData.users.filter((thisUser) => thisUser.id !== user.id),
       });
     }
   }

@@ -2,9 +2,10 @@ import { useDiscordContext } from '@/contexts/DiscordContext';
 import { Call, useStreamVideoClient } from '@stream-io/video-react-sdk';
 import { useCallback, useEffect, useState } from 'react';
 import { ChevronRight, PlusIcon, Speaker } from '../Icons';
+import Link from 'next/link';
 
 export default function CallList(): JSX.Element {
-  const { server, callId, createCall, setCall } = useDiscordContext();
+  const { server, callId, setCall } = useDiscordContext();
   const client = useStreamVideoClient();
 
   const [isOpen, setIsOpen] = useState<boolean>(true);
@@ -29,9 +30,9 @@ export default function CallList(): JSX.Element {
 
   return (
     <div className='w-full my-2'>
-      <div className='flex text-gray-500'>
+      <div className='flex text-gray-500 items-center mb-2 pr-2'>
         <button
-          className='flex w-full items-center justify-start mb-1 px-2'
+          className='flex w-full items-center justify-start px-2'
           onClick={() => setIsOpen((currentValue) => !currentValue)}
         >
           <div
@@ -45,28 +46,12 @@ export default function CallList(): JSX.Element {
             Voice Channels
           </h2>
         </button>
-        <button
-          onClick={async () => {
-            if (!client) {
-              console.log('No client');
-              return;
-            }
-            await createCall(
-              client,
-              server?.name || 'Test Server',
-              'Test Call 4',
-              [
-                'user_2dwxDiRGTaQ79kCJyldJq1DEYv8',
-                '38391e52-68a0-4bc5-9d57-61d9da1adf3a',
-                '5af8f586-f1da-4bdf-a636-add588765d70',
-                '3dcd3e0c-d9d3-4886-ae44-ae4022a214bd',
-              ]
-            );
-            loadAudioChannels();
-          }}
+        <Link
+          className=''
+          href={`/?createChannel=true&isVoice=true&category=Voice Channels`}
         >
-          <PlusIcon className='mr-2 h-5 w-5 text-gray-500' />
-        </button>
+          <PlusIcon />
+        </Link>
       </div>
       {isOpen && (
         <div className='px-2'>

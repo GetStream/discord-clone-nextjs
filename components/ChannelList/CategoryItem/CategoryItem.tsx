@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Channel } from 'stream-chat';
 import CustomChannelPreview from '../CustomChannelPreview';
 import { useState } from 'react';
-import { ChevronRight, PlusIcon } from '../Icons';
+import { ChevronDown, PlusIcon } from '../Icons';
 
 import './CategoryItem.css';
 import { DefaultStreamChatGenerics } from 'stream-chat-react';
@@ -28,10 +28,10 @@ export default function CategoryItem({
         >
           <div
             className={`${
-              isOpen ? 'rotate-90' : ''
+              isOpen ? '' : '-rotate-90'
             } transition-all ease-in-out duration-200`}
           >
-            <ChevronRight />
+            <ChevronDown />
           </div>
           <span className='inline-block uppercase text-sm font-bold px-2'>
             {category}

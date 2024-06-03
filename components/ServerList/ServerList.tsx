@@ -46,7 +46,7 @@ const ServerList = () => {
   return (
     <div className='bg-dark-gray h-full flex flex-col items-center'>
       <button
-        className={`block p-3 aspect-square sidebar-icon ${
+        className={`block p-3 aspect-square sidebar-icon border-t-2 border-t-gray-300 ${
           activeServer === undefined ? 'selected-icon' : ''
         }`}
         onClick={() => changeServer(undefined, client)}
