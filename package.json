@@ -9,16 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/backend": "^0.38.3",
-    "@clerk/nextjs": "^4.29.9",
+    "@clerk/backend": "^3.11.7",
+    "@clerk/nextjs": "^7.5.20",
     "@stream-io/video-react-sdk": "^0.5.5",
     "@types/uuid": "^9.0.8",
-    "next": "14.0.3",
+    "next": "15.5.18",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "stream-chat": "^8.19.1",
     "stream-chat-react": "^11.11.0",
-    "uuid": "^9.0.1"
+    "uuid": "^14.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.24",
@@ -27,7 +27,7 @@
     "autoprefixer": "^10.4.18",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.0.3",
-    "postcss": "^8.4.35",
+    "postcss": "^8.5.10",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
   }
