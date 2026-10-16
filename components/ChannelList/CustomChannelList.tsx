@@ -1,4 +1,4 @@
-import { ChannelListMessengerProps } from 'stream-chat-react';
+import { ChannelListUIProps } from 'stream-chat-react';
 
 import { useDiscordContext } from '@/contexts/DiscordContext';
 import CreateChannelForm from './CreateChannelForm/CreateChannelForm';
@@ -7,7 +7,7 @@ import ChannelListTopBar from './TopBar/ChannelListTopBar';
 import CategoryItem from './CategoryItem/CategoryItem';
 import CallList from './CallList/CallList';
 
-const CustomChannelList: React.FC<ChannelListMessengerProps> = () => {
+const CustomChannelList: React.FC<ChannelListUIProps> = () => {
   const { server, channelsByCategories } = useDiscordContext();
 
   return (

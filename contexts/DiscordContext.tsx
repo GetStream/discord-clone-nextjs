@@ -4,13 +4,12 @@ import { DiscordServer } from '@/app/page';
 import { MemberRequest, StreamVideoClient } from '@stream-io/video-client';
 import { createContext, useCallback, useContext, useState } from 'react';
 import { Channel, ChannelFilters, StreamChat } from 'stream-chat';
-import { DefaultStreamChatGenerics } from 'stream-chat-react';
 import { v4 as uuid } from 'uuid';
 
 type DiscordState = {
   server?: DiscordServer;
   callId: string | undefined;
-  channelsByCategories: Map<string, Array<Channel<DefaultStreamChatGenerics>>>;
+  channelsByCategories: Map<string, Array<Channel>>;
   changeServer: (server: DiscordServer | undefined, client: StreamChat) => void;
   createServer: (
     client: StreamChat,
@@ -69,10 +68,7 @@ export const DiscordContextProvider: any = ({
         client.userID
       );
       const channels = await client.queryChannels(filters);
-      const channelsByCategories = new Map<
-        string,
-        Array<Channel<DefaultStreamChatGenerics>>
-      >();
+      const channelsByCategories = new Map<string, Array<Channel>>();
       if (server) {
         const categories = new Set(
           channels
@@ -82,6 +78,7 @@ export const DiscordContextProvider: any = ({
             .map((channel) => {
               return channel.data?.data?.category;
             })
+            .filter((category): category is string => !!category)
         );
 
         for (const category of Array.from(categories)) {

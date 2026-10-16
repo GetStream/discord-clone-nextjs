@@ -1,6 +1,6 @@
 import {
+  MessageReactions,
   ReactionSelector,
-  ReactionsList,
   useMessageContext,
 } from 'stream-chat-react';
 import Image from 'next/image';
@@ -44,7 +44,7 @@ export default function CustomMessage(): JSX.Element {
           )}
         </div>
         <p className='text-sm text-gray-700'>{message.text}</p>
-        <ReactionsList />
+        <MessageReactions />
       </div>
     </div>
   );

@@ -1,9 +1,6 @@
-import {
-  ChannelPreviewUIComponentProps,
-  useChatContext,
-} from 'stream-chat-react';
+import { ChannelListItemUIProps, useChatContext } from 'stream-chat-react';
 
-const CustomChannelPreview = (props: ChannelPreviewUIComponentProps) => {
+const CustomChannelPreview = (props: ChannelListItemUIProps) => {
   const { channel } = props;
   const { setActiveChannel } = useChatContext();
   return (
