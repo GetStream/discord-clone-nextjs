@@ -6,14 +6,15 @@ import {
   ChannelList,
   ChannelHeader,
   MessageList,
-  MessageInput,
+  MessageComposer,
   Thread,
   Window,
+  WithComponents,
 } from 'stream-chat-react';
 
 import CustomChannelList from '@/components/ChannelList/CustomChannelList';
 import ServerList from '@/components/ServerList/ServerList';
-import MessageComposer from '@/components/MessageList/MessageComposer/MessageComposer';
+import CustomMessageComposer from '@/components/MessageList/MessageComposer/MessageComposer';
 import CustomDateSeparator from '@/components/MessageList/CustomDateSeparator/CustomDateSeparator';
 import CustomMessage from '@/components/MessageList/CustomMessage/CustomMessage';
 import { customReactionOptions } from '@/components/MessageList/CustomReactions/CustomReactionsSelector';
@@ -57,22 +58,28 @@ export default function MyChat({
       <Chat client={chatClient} theme='str-chat__theme-light'>
         <section className='flex h-screen w-screen layout'>
           <ServerList />
-          <ChannelList List={CustomChannelList} sendChannelsToList={true} />
+          <WithComponents overrides={{ ChannelListUI: CustomChannelList }}>
+            <ChannelList sendChannelsToList={true} />
+          </WithComponents>
           {callId && <MyCall callId={callId} />}
           {!callId && (
-            <Channel
-              Message={CustomMessage}
-              Input={MessageComposer}
-              DateSeparator={CustomDateSeparator}
-              reactionOptions={customReactionOptions}
-              HeaderComponent={CustomChannelHeader}
+            <WithComponents
+              overrides={{
+                Message: CustomMessage,
+                MessageComposerUI: CustomMessageComposer,
+                DateSeparator: CustomDateSeparator,
+                reactionOptions: customReactionOptions,
+                HeaderComponent: CustomChannelHeader,
+              }}
             >
-              <Window>
-                <MessageList />
-                <MessageInput />
-              </Window>
-              <Thread />
-            </Channel>
+              <Channel>
+                <Window>
+                  <MessageList />
+                  <MessageComposer />
+                </Window>
+                <Thread />
+              </Channel>
+            </WithComponents>
           )}
         </section>
       </Chat>

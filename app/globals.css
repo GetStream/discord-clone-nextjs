@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import '~stream-chat-react/dist/css/v2/index.css';
+@import '~stream-chat-react/dist/css/index.css';
 
 :root {
   --foreground-rgb: 0, 0, 0;

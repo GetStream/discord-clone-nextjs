@@ -5,11 +5,10 @@ import { useState } from 'react';
 import { ChevronDown, PlusIcon } from '../Icons';
 
 import './CategoryItem.css';
-import { DefaultStreamChatGenerics } from 'stream-chat-react';
 
 type CategoryItemProps = {
   category: string;
-  channels: Channel<DefaultStreamChatGenerics>[];
+  channels: Channel[];
   serverName: string;
 };
 
