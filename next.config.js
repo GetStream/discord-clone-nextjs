@@ -30,6 +30,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'starwars.fandom.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
     ],
   },
 };

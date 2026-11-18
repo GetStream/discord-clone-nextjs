@@ -10,7 +10,7 @@ import MyChat from '@/components/MyChat';
 // const userId = '7cd445eb-9af2-4505-80a9-aa8543c3343f';
 // const userName = 'Harry Potter';
 
-const apiKey = '7cu55d72xtjs';
+const apiKey = process.env.NEXT_PUBLIC_STREAM_PUBLIC_KEY!
 // const userToken =
 //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiN2NkNDQ1ZWItOWFmMi00NTA1LTgwYTktYWE4NTQzYzMzNDNmIn0.TtrCA5VoRB2KofI3O6lYjYZd2pHdQT408u7ryeWO4Qg';
 
