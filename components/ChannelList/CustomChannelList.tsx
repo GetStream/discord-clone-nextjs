@@ -39,7 +39,15 @@ function splitChannelsIntoCategories(
       );
     }
   } else {
-    channelsByCategories.set('Direct Messages', channels);
+    // Direct messages are the 2-member channels that belong to no server
+    channelsByCategories.set(
+      'Direct Messages',
+      channels.filter(
+        (channel) =>
+          !channel.data?.custom?.data?.server &&
+          channel.data?.member_count === 2
+      )
+    );
   }
   return channelsByCategories;
 }

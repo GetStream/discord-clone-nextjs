@@ -65,6 +65,8 @@ export default function MyChat({
         client: chatClient,
         filters: { members: { $in: [user.id] }, type: 'messaging' },
         id: 'channels',
+        // Servers and categories are split on the client, so load the largest page
+        paginatorOptions: { pageSize: 30 },
         sort,
       }),
     [chatClient, user.id]
@@ -124,7 +126,7 @@ export default function MyChat({
           <section className='flex h-screen w-screen layout'>
             <ServerList />
             <CustomChannelList paginator={paginator} />
-            {callId && <MyCall callId={callId} />}
+            {callId && <MyCall key={callId} callId={callId} />}
             {!callId && (
               <WithComponents
                 overrides={{

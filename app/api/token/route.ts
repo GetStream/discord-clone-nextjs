@@ -1,18 +1,17 @@
+import { auth } from '@clerk/nextjs';
 import { StreamClient } from '@stream-io/node-sdk';
 
-export async function POST(request: Request) {
+export async function POST() {
+  // Only mint a token for the signed-in Clerk user, never for an id from the request
+  const { userId } = auth();
+  if (!userId) {
+    return new Response('Unauthorized', { status: 401 });
+  }
+
   const serverClient = new StreamClient(
     '7cu55d72xtjs',
     process.env.STREAM_CHAT_SECRET!
   );
-  const body = await request.json();
-  console.log('[/api/token] Body:', body);
-
-  const userId = body?.userId;
-
-  if (!userId) {
-    return Response.error();
-  }
 
   // The client connects with this token as a fixed string (no token provider
   // to refresh it), so mint one without an expiry.

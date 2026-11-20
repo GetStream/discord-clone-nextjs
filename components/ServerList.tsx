@@ -18,6 +18,7 @@ const ServerList = () => {
         type: 'messaging',
         members: { $in: [client.userId as string] },
       },
+      limit: 30,
     });
     const serverSet: Set<DiscordServer> = new Set(
       channels

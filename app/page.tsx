@@ -32,15 +32,9 @@ export default function Home() {
       const userId = myUser?.id;
       const mail = myUser?.primaryEmailAddress?.emailAddress;
       if (userId && mail) {
+        // The route reads the user from the Clerk session
         const streamResponse = await fetch('/api/register-user', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId: userId,
-            email: mail,
-          }),
         });
         const responseBody = await streamResponse.json();
         console.log('[registerUser] Stream response:', responseBody);
@@ -86,14 +80,9 @@ export default function Home() {
   return <MyChat {...myState} />;
 
   async function getUserToken(userId: string, userName: string) {
+    // The route mints the token for the user of the Clerk session
     const response = await fetch('/api/token', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userId: userId,
-      }),
     });
     const responseBody = await response.json();
     const token = responseBody.token;

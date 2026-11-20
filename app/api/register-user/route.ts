@@ -1,22 +1,28 @@
-import { clerkClient } from '@clerk/nextjs';
+import { clerkClient, currentUser } from '@clerk/nextjs';
 import { StreamClient } from '@stream-io/node-sdk';
 
-export async function POST(request: Request) {
+export async function POST() {
+  // Register the signed-in Clerk user, never a user id from the request
+  const clerkUser = await currentUser();
+  if (!clerkUser) {
+    return new Response('Unauthorized', { status: 401 });
+  }
+
+  const userId = clerkUser.id;
+  const mail = clerkUser.emailAddresses.find(
+    (address) => address.id === clerkUser.primaryEmailAddressId
+  )?.emailAddress;
+
+  if (!mail) {
+    return Response.error();
+  }
+
   const serverClient = new StreamClient(
     '7cu55d72xtjs',
     process.env.STREAM_CHAT_SECRET!
   );
-  const body = await request.json();
-  console.log('[/api/register-user] Body:', body);
 
-  const userId = body?.userId;
-  const mail = body?.email;
-
-  if (!userId || !mail) {
-    return Response.error();
-  }
-
-  const user = await serverClient.upsertUsers([
+  await serverClient.upsertUsers([
     {
       id: userId,
       role: 'user',
@@ -34,7 +40,7 @@ export async function POST(request: Request) {
   };
   const updatedUser = await clerkClient.users.updateUser(userId, params);
 
-  console.log('[/api/register-user] User:', updatedUser);
+  console.log('[/api/register-user] User:', updatedUser.id);
   const response = {
     userId: userId,
     userName: mail,

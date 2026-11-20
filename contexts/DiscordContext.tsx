@@ -44,6 +44,13 @@ const initialValue: DiscordState = {
 
 const DiscordContext = createContext<DiscordState>(initialValue);
 
+// The creator always becomes a member, so the new channel shows up in their list
+function withCurrentUser(client: StreamChat, userIds: string[]): string[] {
+  return client.userId
+    ? Array.from(new Set([client.userId, ...userIds]))
+    : userIds;
+}
+
 export const DiscordContextProvider: any = ({
   children,
 }: {
@@ -105,6 +112,7 @@ export const DiscordContextProvider: any = ({
       imageUrl: string,
       userIds: string[]
     ) => {
+      const server: DiscordServer = { name, image: imageUrl };
       const messagingChannel = client.channel('messaging', uuid(), {
         custom: {
           name: 'Welcome',
@@ -114,26 +122,26 @@ export const DiscordContextProvider: any = ({
             category: 'Text Channels',
           },
         },
-        members: userIds.map((userId) => ({ user_id: userId })),
+        members: withCurrentUser(client, userIds).map((userId) => ({
+          user_id: userId,
+        })),
       });
 
       try {
         const response = await messagingChannel.create();
         console.log('[DiscordContext - createServer] Response: ', response);
-        if (myState.server) {
-          await createCall(
-            videoClient,
-            myState.server,
-            'General Voice Channel',
-            userIds
-          );
-        }
-        changeServer({ name, image: imageUrl });
+        await createCall(
+          videoClient,
+          server,
+          'General Voice Channel',
+          withCurrentUser(client, userIds)
+        );
+        changeServer(server);
       } catch (err) {
         console.error(err);
       }
     },
-    [changeServer, createCall, myState.server]
+    [changeServer, createCall]
   );
 
   const createChannel = useCallback(
@@ -144,7 +152,8 @@ export const DiscordContextProvider: any = ({
       userIds: string[]
     ) => {
       if (client.userId) {
-        const channel = client.channel('messaging', {
+        // An explicit id, so channels with the same members stay distinct
+        const channel = client.channel('messaging', uuid(), {
           custom: {
             name: name,
             data: {
@@ -152,7 +161,9 @@ export const DiscordContextProvider: any = ({
               category: category,
             },
           },
-          members: userIds.map((userId) => ({ user_id: userId })),
+          members: withCurrentUser(client, userIds).map((userId) => ({
+            user_id: userId,
+          })),
         });
         try {
           const response = await channel.create();
