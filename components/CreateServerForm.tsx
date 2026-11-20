@@ -4,10 +4,11 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { convertTimestampToDate } from 'stream-chat';
 import { useChatContext } from 'stream-chat-react';
 import { useStreamVideoClient } from '@stream-io/video-react-sdk';
-import { CloseMark } from '../ChannelList/Icons';
-import UserRow from '../ChannelList/CreateChannelForm/UserRow';
+import { CloseMark } from './ChannelList/Icons';
+import UserRow from './ChannelList/CreateChannelForm/UserRow';
 
 type FormState = {
   serverName: string;
@@ -36,7 +37,9 @@ const CreateServerForm = () => {
   const [users, setUsers] = useState<UserObject[]>([]);
 
   const loadUsers = useCallback(async () => {
-    const response = await client.queryUsers({});
+    const response = await client.queryUsers({
+      payload: { filter_conditions: {} },
+    });
     const users: UserObject[] = response.users
       .filter((user) => user.role !== 'admin')
       .map((user) => {
@@ -45,7 +48,7 @@ const CreateServerForm = () => {
           name: user.name ?? user.id,
           image: user.image as string,
           online: user.online,
-          lastOnline: user.last_active,
+          lastOnline: convertTimestampToDate(user.last_active)?.toISOString(),
         };
       });
     if (users) setUsers(users);

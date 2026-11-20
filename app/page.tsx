@@ -1,6 +1,6 @@
 'use client';
 
-import { User } from 'stream-chat';
+import type { ClientUser } from 'stream-chat';
 import { LoadingIndicator } from 'stream-chat-react';
 
 import { useClerk } from '@clerk/nextjs';
@@ -14,14 +14,9 @@ const apiKey = '7cu55d72xtjs';
 // const userToken =
 //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiN2NkNDQ1ZWItOWFmMi00NTA1LTgwYTktYWE4NTQzYzMzNDNmIn0.TtrCA5VoRB2KofI3O6lYjYZd2pHdQT408u7ryeWO4Qg';
 
-export type DiscordServer = {
-  name: string;
-  image: string | undefined;
-};
-
 export type Homestate = {
   apiKey: string;
-  user: User;
+  user: ClientUser;
   token: string;
 };
 
@@ -37,15 +32,9 @@ export default function Home() {
       const userId = myUser?.id;
       const mail = myUser?.primaryEmailAddress?.emailAddress;
       if (userId && mail) {
+        // The route reads the user from the Clerk session
         const streamResponse = await fetch('/api/register-user', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId: userId,
-            email: mail,
-          }),
         });
         const responseBody = await streamResponse.json();
         console.log('[registerUser] Stream response:', responseBody);
@@ -91,14 +80,9 @@ export default function Home() {
   return <MyChat {...myState} />;
 
   async function getUserToken(userId: string, userName: string) {
+    // The route mints the token for the user of the Clerk session
     const response = await fetch('/api/token', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userId: userId,
-      }),
     });
     const responseBody = await response.json();
     const token = responseBody.token;
@@ -108,7 +92,7 @@ export default function Home() {
       return;
     }
 
-    const user: User = {
+    const user: ClientUser = {
       id: userId,
       name: userName,
       image: `https://getstream.io/random_png/?id=${userId}&name=${userName}`,

@@ -1,7 +1,7 @@
 import { useChatContext } from 'stream-chat-react';
 import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
-import { DiscordServer } from '@/app/page';
+import { DiscordServer } from '@/DiscordServer';
 import { useDiscordContext } from '@/contexts/DiscordContext';
 import CreateServerForm from './CreateServerForm';
 import Link from 'next/link';
@@ -13,16 +13,19 @@ const ServerList = () => {
   const [serverList, setServerList] = useState<DiscordServer[]>([]);
 
   const loadServerList = useCallback(async (): Promise<void> => {
-    const channels = await client.queryChannels({
-      type: 'messaging',
-      members: { $in: [client.userID as string] },
+    const channels = await client.queryChannelsAndHydrate({
+      filter_conditions: {
+        type: 'messaging',
+        members: { $in: [client.userId as string] },
+      },
+      limit: 30,
     });
     const serverSet: Set<DiscordServer> = new Set(
       channels
         .map((channel: Channel) => {
           return {
-            name: (channel.data?.data?.server as string) ?? 'Unknown',
-            image: channel.data?.data?.image,
+            name: (channel.data?.custom?.data?.server as string) ?? 'Unknown',
+            image: channel.data?.custom?.data?.image,
           };
         })
         .filter((server: DiscordServer) => server.name !== 'Unknown')
@@ -35,7 +38,7 @@ const ServerList = () => {
     const serverArray = Array.from(serverSet.values());
     setServerList(serverArray);
     if (serverArray.length > 0) {
-      changeServer(serverArray[0], client);
+      changeServer(serverArray[0]);
     }
   }, [client, changeServer]);
 
@@ -49,7 +52,7 @@ const ServerList = () => {
         className={`block p-3 aspect-square sidebar-icon border-t-2 border-t-gray-300 ${
           activeServer === undefined ? 'selected-icon' : ''
         }`}
-        onClick={() => changeServer(undefined, client)}
+        onClick={() => changeServer(undefined)}
       >
         <div className='rounded-icon discord-icon'></div>
       </button>
@@ -62,7 +65,7 @@ const ServerList = () => {
                 server === activeServer ? 'selected-icon' : ''
               }`}
               onClick={() => {
-                changeServer(server, client);
+                changeServer(server);
               }}
             >
               {server.image && checkIfUrl(server.image) ? (

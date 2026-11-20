@@ -4,13 +4,15 @@
 
 This repository accompanies the series of blog posts published on the Stream Blog about creating a Discord clone using [NextJS](https://nextjs.org), [TailwindCSS](https://tailwindcss.com), and the Stream [Chat](https://getstream.io/chat/docs/) and [Video](https://getstream.io/video/docs/) SDKs.
 
-The series will have five posts at the end (we'll have the links updated once they are published):
+The series has five posts:
 
 - [Part 1: Setup Project](https://getstream.io/blog/discord-clone-project-setup/)
 - [Part 2: General Layout and Server List](https://getstream.io/blog/discord-clone-server-list/)
-- Part 3: Channel List UI (coming soon)
-- Part 4: Message List UI
-- Part 5: Adding video and audio calling
+- [Part 3: Channel List UI](https://getstream.io/blog/discord-clone-channel-list/)
+- [Part 4: Message List UI](https://getstream.io/blog/discord-clone-message-list/)
+- [Part 5: Adding video and audio calling](https://getstream.io/blog/discord-clone-audio-video/)
+
+The project uses `stream-chat` v10, `stream-chat-react` v15, `@stream-io/video-react-sdk` and `@stream-io/node-sdk` (for the API routes).
 
 ---
 

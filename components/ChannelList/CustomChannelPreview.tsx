@@ -1,8 +1,11 @@
-import { ChannelListItemUIProps, useChatContext } from 'stream-chat-react';
+import {
+  ChannelListItemUIProps,
+  useWorkspaceNavigation,
+} from 'stream-chat-react';
 
 const CustomChannelPreview = (props: ChannelListItemUIProps) => {
   const { channel } = props;
-  const { setActiveChannel } = useChatContext();
+  const { openChannel } = useWorkspaceNavigation();
   return (
     <div
       className={`flex items-center mx-2 ${
@@ -11,11 +14,11 @@ const CustomChannelPreview = (props: ChannelListItemUIProps) => {
     >
       <button
         className='w-full flex items-center px-2 hover:bg-gray-200 rounded-md'
-        onClick={() => setActiveChannel(channel)}
+        onClick={() => openChannel(channel)}
       >
         <span className='italic text-xl mr-2 text-gray-500'>#</span>
         <span className='text-sm'>
-          {channel.data?.name || 'Channel Preview'}
+          {channel.data?.custom?.name || 'Channel Preview'}
         </span>
       </button>
     </div>

@@ -5,7 +5,15 @@ import {
 } from 'stream-chat-react';
 import Image from 'next/image';
 import { useState } from 'react';
+import { nsToDate, type TimestampNS } from 'stream-chat';
 import MessageOptions from './MessageOptions';
+
+function formatDate(timestamp: TimestampNS): string {
+  return `${nsToDate(timestamp).toLocaleString('en-US', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  })}`;
+}
 
 export default function CustomMessage(): JSX.Element {
   const { message } = useMessageContext();
@@ -48,14 +56,4 @@ export default function CustomMessage(): JSX.Element {
       </div>
     </div>
   );
-
-  function formatDate(date: Date | string): string {
-    if (typeof date === 'string') {
-      return date;
-    }
-    return `${date.toLocaleString('en-US', {
-      dateStyle: 'medium',
-      timeStyle: 'short',
-    })}`;
-  }
 }

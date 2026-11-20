@@ -1,6 +1,6 @@
 import { useDiscordContext } from '@/contexts/DiscordContext';
-import { CallingState } from '@stream-io/video-client';
 import {
+  CallingState,
   useCallStateHooks,
   StreamTheme,
   SpeakerLayout,
