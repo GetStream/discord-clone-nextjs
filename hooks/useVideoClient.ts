@@ -1,4 +1,4 @@
-import { StreamVideoClient } from '@stream-io/video-client';
+import { StreamVideoClient } from '@stream-io/video-react-sdk';
 import { useEffect, useState } from 'react';
 import { UseClientOptions } from './useClient';
 

@@ -1,4 +1,4 @@
-export const customReactionOptions = [
+export const customMessageReactions = [
   {
     type: 'runner',
     Component: () => <>🏃🏼</>,

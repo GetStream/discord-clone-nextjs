@@ -1,10 +1,10 @@
 import { clerkClient } from '@clerk/nextjs';
-import { StreamChat } from 'stream-chat';
+import { StreamClient } from '@stream-io/node-sdk';
 
 export async function POST(request: Request) {
-  const serverClient = StreamChat.getInstance(
+  const serverClient = new StreamClient(
     '7cu55d72xtjs',
-    process.env.STREAM_CHAT_SECRET
+    process.env.STREAM_CHAT_SECRET!
   );
   const body = await request.json();
   console.log('[/api/register-user] Body:', body);
@@ -16,12 +16,16 @@ export async function POST(request: Request) {
     return Response.error();
   }
 
-  const user = await serverClient.upsertUser({
-    id: userId,
-    role: 'user',
-    name: mail,
-    imageUrl: `https://getstream.io/random_png/?id=${userId}&name=${mail}`,
-  });
+  const user = await serverClient.upsertUsers([
+    {
+      id: userId,
+      role: 'user',
+      name: mail,
+      custom: {
+        imageUrl: `https://getstream.io/random_png/?id=${userId}&name=${mail}`,
+      },
+    },
+  ]);
 
   const params = {
     publicMetadata: {

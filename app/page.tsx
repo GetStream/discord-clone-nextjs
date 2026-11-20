@@ -1,6 +1,6 @@
 'use client';
 
-import { User } from 'stream-chat';
+import type { ClientUser } from 'stream-chat';
 import { LoadingIndicator } from 'stream-chat-react';
 
 import { useClerk } from '@clerk/nextjs';
@@ -14,14 +14,9 @@ const apiKey = '7cu55d72xtjs';
 // const userToken =
 //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiN2NkNDQ1ZWItOWFmMi00NTA1LTgwYTktYWE4NTQzYzMzNDNmIn0.TtrCA5VoRB2KofI3O6lYjYZd2pHdQT408u7ryeWO4Qg';
 
-export type DiscordServer = {
-  name: string;
-  image: string | undefined;
-};
-
 export type Homestate = {
   apiKey: string;
-  user: User;
+  user: ClientUser;
   token: string;
 };
 
@@ -108,7 +103,7 @@ export default function Home() {
       return;
     }
 
-    const user: User = {
+    const user: ClientUser = {
       id: userId,
       name: userName,
       image: `https://getstream.io/random_png/?id=${userId}&name=${userName}`,
