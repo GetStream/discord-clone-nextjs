@@ -129,6 +129,8 @@ export const DiscordContextProvider: any = ({
 
       try {
         const response = await messagingChannel.create();
+        // Show the new channel in the channel list without waiting for a reload
+        client.channelManager.ingestChannel(messagingChannel);
         console.log('[DiscordContext - createServer] Response: ', response);
         await createCall(
           videoClient,
@@ -167,6 +169,8 @@ export const DiscordContextProvider: any = ({
         });
         try {
           const response = await channel.create();
+          // Show the new channel (or DM) in the channel list without waiting for a reload
+          client.channelManager.ingestChannel(channel);
         } catch (err) {
           console.log(err);
         }
