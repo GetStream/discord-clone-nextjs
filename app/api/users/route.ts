@@ -1,12 +1,17 @@
 import { UserObject } from '@/model/UserObject';
-import { StreamChat } from 'stream-chat';
+import { StreamClient, convertTimestampToDate } from '@stream-io/node-sdk';
+
+// Query the users on every request instead of once at build time.
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const serverClient = StreamChat.getInstance(
+  const serverClient = new StreamClient(
     '7cu55d72xtjs',
-    process.env.STREAM_CHAT_SECRET
+    process.env.STREAM_CHAT_SECRET!
   );
-  const response = await serverClient.queryUsers({});
+  const response = await serverClient.queryUsers({
+    payload: { filter_conditions: {} },
+  });
   const data: UserObject[] = response.users
     .filter((user) => user.role !== 'admin')
     .map((user) => {
@@ -15,7 +20,7 @@ export async function GET() {
         name: user.name ?? user.id,
         image: user.image as string,
         online: user.online,
-        lastOnline: user.last_active,
+        lastOnline: convertTimestampToDate(user.last_active)?.toISOString(),
       };
     });
 

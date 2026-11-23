@@ -1,16 +1,15 @@
 'use client';
 
-import { DiscordServer } from '@/app/page';
-import { MemberRequest, StreamVideoClient } from '@stream-io/video-client';
+import { DiscordServer } from '@/DiscordServer';
+import { MemberRequest, StreamVideoClient } from '@stream-io/video-react-sdk';
 import { createContext, useCallback, useContext, useState } from 'react';
-import { Channel, ChannelFilters, StreamChat } from 'stream-chat';
+import { StreamChat } from 'stream-chat';
 import { v4 as uuid } from 'uuid';
 
 type DiscordState = {
   server?: DiscordServer;
   callId: string | undefined;
-  channelsByCategories: Map<string, Array<Channel>>;
-  changeServer: (server: DiscordServer | undefined, client: StreamChat) => void;
+  changeServer: (server: DiscordServer | undefined) => void;
   createServer: (
     client: StreamChat,
     videoClient: StreamVideoClient,
@@ -36,7 +35,6 @@ type DiscordState = {
 const initialValue: DiscordState = {
   server: undefined,
   callId: undefined,
-  channelsByCategories: new Map(),
   changeServer: () => {},
   createServer: () => {},
   createChannel: () => {},
@@ -46,6 +44,13 @@ const initialValue: DiscordState = {
 
 const DiscordContext = createContext<DiscordState>(initialValue);
 
+// The creator always becomes a member, so the new channel shows up in their list
+function withCurrentUser(client: StreamChat, userIds: string[]): string[] {
+  return client.userId
+    ? Array.from(new Set([client.userId, ...userIds]))
+    : userIds;
+}
+
 export const DiscordContextProvider: any = ({
   children,
 }: {
@@ -53,50 +58,12 @@ export const DiscordContextProvider: any = ({
 }) => {
   const [myState, setMyState] = useState<DiscordState>(initialValue);
 
+  // The channels themselves come from the ChannelPaginator (see MyChat.tsx);
+  // CustomChannelList splits them by the selected server.
   const changeServer = useCallback(
-    async (server: DiscordServer | undefined, client: StreamChat) => {
-      let filters: ChannelFilters = {
-        type: 'messaging',
-        members: { $in: [client.userID as string] },
-      };
-      if (!server) {
-        filters.member_count = 2;
-      }
-
-      console.log(
-        '[DiscordContext - loadServerList] Querying channels for ',
-        client.userID
-      );
-      const channels = await client.queryChannels(filters);
-      const channelsByCategories = new Map<string, Array<Channel>>();
-      if (server) {
-        const categories = new Set(
-          channels
-            .filter((channel) => {
-              return channel.data?.data?.server === server.name;
-            })
-            .map((channel) => {
-              return channel.data?.data?.category;
-            })
-            .filter((category): category is string => !!category)
-        );
-
-        for (const category of Array.from(categories)) {
-          channelsByCategories.set(
-            category,
-            channels.filter((channel) => {
-              return (
-                channel.data?.data?.server === server.name &&
-                channel.data?.data?.category === category
-              );
-            })
-          );
-        }
-      } else {
-        channelsByCategories.set('Direct Messages', channels);
-      }
+    (server: DiscordServer | undefined) => {
       setMyState((myState) => {
-        return { ...myState, server, channelsByCategories };
+        return { ...myState, server };
       });
     },
     [setMyState]
@@ -145,33 +112,38 @@ export const DiscordContextProvider: any = ({
       imageUrl: string,
       userIds: string[]
     ) => {
+      const server: DiscordServer = { name, image: imageUrl };
       const messagingChannel = client.channel('messaging', uuid(), {
-        name: 'Welcome',
-        members: userIds,
-        data: {
-          image: imageUrl,
-          server: name,
-          category: 'Text Channels',
+        custom: {
+          name: 'Welcome',
+          data: {
+            image: imageUrl,
+            server: name,
+            category: 'Text Channels',
+          },
         },
+        members: withCurrentUser(client, userIds).map((userId) => ({
+          user_id: userId,
+        })),
       });
 
       try {
         const response = await messagingChannel.create();
+        // Show the new channel in the channel list without waiting for a reload
+        client.channelManager.ingestChannel(messagingChannel);
         console.log('[DiscordContext - createServer] Response: ', response);
-        if (myState.server) {
-          await createCall(
-            videoClient,
-            myState.server,
-            'General Voice Channel',
-            userIds
-          );
-        }
-        changeServer({ name, image: imageUrl }, client);
+        await createCall(
+          videoClient,
+          server,
+          'General Voice Channel',
+          withCurrentUser(client, userIds)
+        );
+        changeServer(server);
       } catch (err) {
         console.error(err);
       }
     },
-    [changeServer, createCall, myState.server]
+    [changeServer, createCall]
   );
 
   const createChannel = useCallback(
@@ -181,17 +153,24 @@ export const DiscordContextProvider: any = ({
       category: string,
       userIds: string[]
     ) => {
-      if (client.userID) {
-        const channel = client.channel('messaging', {
-          name: name,
-          members: userIds,
-          data: {
-            server: myState.server?.name,
-            category: category,
+      if (client.userId) {
+        // An explicit id, so channels with the same members stay distinct
+        const channel = client.channel('messaging', uuid(), {
+          custom: {
+            name: name,
+            data: {
+              server: myState.server?.name,
+              category: category,
+            },
           },
+          members: withCurrentUser(client, userIds).map((userId) => ({
+            user_id: userId,
+          })),
         });
         try {
           const response = await channel.create();
+          // Show the new channel (or DM) in the channel list without waiting for a reload
+          client.channelManager.ingestChannel(channel);
         } catch (err) {
           console.log(err);
         }
@@ -212,7 +191,6 @@ export const DiscordContextProvider: any = ({
   const store: DiscordState = {
     server: myState.server,
     callId: myState.callId,
-    channelsByCategories: myState.channelsByCategories,
     changeServer: changeServer,
     createServer: createServer,
     createChannel: createChannel,

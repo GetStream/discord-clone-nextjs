@@ -209,6 +209,7 @@ export default function CreateChannelForm(): JSX.Element {
           formData.category,
           formData.users.map((user) => user.id)
         );
+        break;
       case 'voice':
         if (videoClient && server) {
           createCall(

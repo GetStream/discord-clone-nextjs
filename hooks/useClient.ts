@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { StreamChat, TokenOrProvider, User } from 'stream-chat';
+import { ClientUser, StreamChat, TokenOrProvider } from 'stream-chat';
 
 export type UseClientOptions = {
   apiKey: string;
-  user: User;
+  user: ClientUser;
   tokenOrProvider: TokenOrProvider;
 };
 
